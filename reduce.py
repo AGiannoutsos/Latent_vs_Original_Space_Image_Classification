@@ -10,6 +10,7 @@ from keras.utils import normalize
 from autoencoder.model import get_Autoencoder, train_Autoencoder
 from autoencoder.visualization import autoencoder_visualization_window
 
+
 # Define class with colors for UI improvement
 class bcolors:
     HEADER = '\033[95m'
