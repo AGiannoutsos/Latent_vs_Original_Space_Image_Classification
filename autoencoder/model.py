@@ -3,7 +3,7 @@ import tensorflow as tf
 import keras
 from keras.models import Sequential
 from keras.layers import Input, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D
-from keras.layers import AveragePooling2D, MaxPool2D, MaxPooling2D, Dropout, GlobalMaxPooling2D, GlobalAveragePooling2D, UpSampling2D
+from keras.layers import AveragePooling2D, MaxPool2D, MaxPooling2D, Dropout, GlobalMaxPooling2D, GlobalAveragePooling2D, UpSampling2D, Reshape, RepeatVector
 from keras.layers.merge import concatenate
 from sklearn.metrics import classification_report
 
@@ -39,13 +39,16 @@ def Encoder(model_layers, input_shape):
     return model
 
 
-def Decoder(model_layers, input_shape):
+def Decoder(model_layers, input_shape, latent_shape):
 
     # initialize the sequential model
     model = Sequential(name="decoder")
 
-    # add input layer
-    model.add(Input(input_shape))
+    # rescale back with dense to the previous shape
+    model.add ( Dense(units=input_shape[0]*input_shape[1]*latent_shape, activation="relu") )
+
+    # reshape to inserted shape
+    model.add( Reshape((input_shape[0], input_shape[1], -1)) )
 
     # layers
     num_of_layers = len(model_layers)
@@ -68,19 +71,41 @@ def Decoder(model_layers, input_shape):
 
     return model
 
-def Autoencoder(encoder_model, decoder_model):
+def Bottleneck(model_layers, input_shape):
+
+    # initialize the sequential model
+    model = Sequential(name="bottleneck")
+
+    # add input layer
+    model.add(Input(input_shape))
+
+    # add flatten layer
+    model.add(Flatten())
+
+    # add dense without activation for the latent vector space
+    model.add( Dense(model_layers[1], name="latent") )
+
+    return model
+
+
+def Autoencoder(encoder_model, bottleneck_layer, decoder_model):
 
     # merge both models into one
     autoencoder = Sequential(name="autoencoder")
 
     autoencoder.add( encoder_model.input )
+
     autoencoder.add(encoder_model)
+    autoencoder.add(bottleneck_layer)
     autoencoder.add(decoder_model)
 
     # add sigmoid layer
     autoencoder.add( Conv2D(1, (3, 3), activation='sigmoid', padding='same') )
 
     return autoencoder
+
+
+
 
 
 def FullyConected(model_layers, input_shape):
@@ -130,10 +155,11 @@ def get_Autoencoder(model_info, input_shape):
     if isinstance(model_info, str):
         autoencoder = keras.models.load_model(model_info)
         return autoencoder
-
-    encoder = Encoder(model_info["encoder_layers"], input_shape)
-    decoder = Decoder(model_info["decoder_layers"], encoder.output.get_shape()[1:])
-    autoencoder = Autoencoder(encoder, decoder)
+ 
+    encoder     = Encoder(model_info["encoder_layers"], input_shape)
+    bottleneck  = Bottleneck(model_info["bottleneck_layer"], encoder.output.get_shape()[1:])
+    decoder     = Decoder(model_info["decoder_layers"], encoder.output.get_shape()[1:], model_info["bottleneck_layer"][1])
+    autoencoder = Autoencoder(encoder, bottleneck,  decoder)
     
     # get the optimizer
     if (model_info["optimizer"][0] == "rmsprop"):
@@ -142,11 +168,9 @@ def get_Autoencoder(model_info, input_shape):
         optimizer = keras.optimizers.Adam(model_info["optimizer"][1])   
 
     # compile the model with given hyperparameters
-    # autoencoder.compile(optimizer=optimizer,  loss="mean_squared_error", metrics=[ "accuracy", keras.metrics.Precision(), keras.metrics.Recall(), keras.metrics.AUC()])
     autoencoder.compile(optimizer=optimizer,  loss="mean_squared_error")
 
     return autoencoder
-
 # train new or saved autoencoder just type the path at model info if training a new one
 # def train_Autoencoder(model, train_data, validation_split=0.1, batch_size=32, epochs=1):
 def train_Autoencoder(model, models_info, train_data, validation_split=0.1):
