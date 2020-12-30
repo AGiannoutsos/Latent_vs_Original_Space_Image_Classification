@@ -104,8 +104,9 @@ def Autoencoder(encoder_model, bottleneck_layer, decoder_model):
 
     return autoencoder
 
-
-
+def get_Latent_space(model, data):
+    # get the output of the bottleneck dense layer
+    return model.layers[1].predict(model.layers[0].predict(data))
 
 
 def FullyConected(model_layers, input_shape):
