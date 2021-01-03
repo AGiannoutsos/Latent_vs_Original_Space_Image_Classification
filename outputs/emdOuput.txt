@@ -1,0 +1,2 @@
+Average Correct Search Results EMD:       0.0000 in Time: 1.05785 seconds with cluster size: 14
+Average Correct Search Results MANHATTAN: 0.5000 in Time: 0.00041 seconds

@@ -319,3 +319,21 @@ def train_Classifier(model, model_info, train_data, label_data, test_data, test_
 
     # autoencoder = get_Autoencoder(hamond_model, [28,28,1])
     # autoencoder.summary()
+
+# import matplotlib.pyplot as plt
+# import numpy as np
+
+# def get_Latent_space(model, data):
+#     # get the output of the bottleneck dense layer
+#     return model.layers[1].predict(model.layers[0].predict(data))
+
+# bb = []
+# for i in range(100):
+#     if train_Y[i][0] == 1:
+#         bb.append(i)
+
+# a = np.random.random((16, 16))
+# plt.imshow(get_Latent_space(small_model, train_X[bb]), cmap='hot', interpolation='nearest')
+# plt.show()
+
+# print( train_Y[bb])
