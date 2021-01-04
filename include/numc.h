@@ -72,6 +72,7 @@ class NumC {
 
 };
 
+template class NumC<short>;
 template class NumC<int>;
 template class NumC<long>;
 template class NumC<double>;

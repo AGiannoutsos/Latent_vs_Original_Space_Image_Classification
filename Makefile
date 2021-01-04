@@ -9,6 +9,7 @@
 LSH_EXEC= lsh
 CUBE_EXEC= cube
 CLUSTER_EXEC= cluster
+SEARCH_EXEC= search
 
 # Define filetype and compiler type.
 CXX= g++ -std=c++11 
@@ -36,7 +37,7 @@ DEPS= $(wildcard $(IDIR)/*.h)
 ODIR= build
 DEMANDED_OBJECTS= $(ODIR)/exhaustive_knn.o $(ODIR)/hashtable.o $(ODIR)/hash_function.o $(ODIR)/numc.o $(ODIR)/pandac.o $(ODIR)/prediction_results.o
 
-default: $(CUBE_EXEC) $(LSH_EXEC) $(CLUSTER_EXEC)
+default: $(CUBE_EXEC) $(LSH_EXEC) $(CLUSTER_EXEC) $(SEARCH_EXEC)
 	@echo "============================================================================"
 	@echo "Compiled Project!"
 info:
@@ -73,21 +74,27 @@ $(ODIR)/%.o: $(SRCDIR)/%.$(CODETYPE)
 	$(CXX) -c -o $(ODIR)/$@ $< $(CXXFLAGS)
 $(CUBE_EXEC): $(DEMANDED_OBJECTS) $(ODIR)/hc_classifier.o $(ODIR)/cube.o
 	@echo "============================================================================"
-	@echo "Creating $(CUBE_EXEC)..."
+	@echo "Creating $@ ..."
 	mkdir $(BDIR) -p
-	$(CXX) -o $(BDIR)/cube $^ $(LDLIBS) $(CXXFLAGS)
+	$(CXX) -o $(BDIR)/$@ $^ $(LDLIBS) $(CXXFLAGS)
 
 $(LSH_EXEC): $(DEMANDED_OBJECTS) $(ODIR)/lsh_classifier.o $(ODIR)/lsh.o
 	@echo "============================================================================"
-	@echo "Creating $(LSH_EXEC)..."
+	@echo "Creating $@ ..."
 	mkdir $(BDIR) -p
-	$(CXX) -o $(BDIR)/lsh $^ $(LDLIBS) $(CXXFLAGS)
+	$(CXX) -o $(BDIR)/$@ $^ $(LDLIBS) $(CXXFLAGS)
+
+$(SEARCH_EXEC): $(DEMANDED_OBJECTS) $(ODIR)/lsh_classifier.o $(ODIR)/search.o
+	@echo "============================================================================"
+	@echo "Creating $@ ..."
+	mkdir $(BDIR) -p
+	$(CXX) -o $(BDIR)/$@ $^ $(LDLIBS) $(CXXFLAGS)
 
 $(CLUSTER_EXEC): $(DEMANDED_OBJECTS) $(ODIR)/lsh_classifier.o $(ODIR)/hc_classifier.o $(ODIR)/kmedians.o $(ODIR)/cluster.o
 	@echo "============================================================================"
-	@echo "Creating $(CLUSTER_EXEC)..."
+	@echo "Creating $@ ..."
 	mkdir $(BDIR) -p
-	$(CXX) -o $(BDIR)/cluster $^ $(LDLIBS) $(CXXFLAGS)
+	$(CXX) -o $(BDIR)/$@ $^ $(LDLIBS) $(CXXFLAGS)
 clean:
 	@echo "============================================================================"
 	@echo "Cleaning up..."
