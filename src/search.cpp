@@ -33,156 +33,92 @@ int main(int argc, char** argv) {
 // Reading inline parameters.
     int i;
 
-// Search for <-EMD> parameter.
-    bool emd = false;
+// Search for <-d> parameter.
+	for (i=1; i < argc - 1; i++)
+		if (strcmp(argv[i], "-d") == 0) break;
+	if (i >= argc - 1) {
+      	cout << "\033[0;31mError!\033[0m Not included '-d' parameter." << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+		return 1;
+	}
+	char *original_inputFile = argv[i+1];
+
+// Search for <-i> parameter.
     for (i=1; i < argc - 1; i++)
-        if (strcmp(argv[i], "-EMD") == 0) break;
-    if (i < argc) {
-        emd = true;
+        if (strcmp(argv[i], "-i") == 0) break;
+    if (i >= argc - 1) {
+        cout << "\033[0;31mError!\033[0m Not included '-i' parameter." << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+        return 1;
     }
-    if (emd == false) { 
-    // Search for <-d> parameter.
-    	for (i=1; i < argc - 1; i++)
-    		if (strcmp(argv[i], "-d") == 0) break;
-    	if (i >= argc - 1) {
-          	cout << "\033[0;31mError!\033[0m Not included '-d' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-    		return 1;
-    	}
-    	char *original_inputFile = argv[i+1];
+    char *reduced_inputFile = argv[i+1];
 
-    // Search for <-i> parameter.
-        for (i=1; i < argc - 1; i++)
-            if (strcmp(argv[i], "-i") == 0) break;
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-i' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        }
-        char *reduced_inputFile = argv[i+1];
+// Search for <-q> parameter.
+	for (i=1; i < argc - 1; i++)
+		if (strcmp(argv[i], "-q") == 0) break;
+	if (i >= argc - 1) {
+      	cout << "\033[0;31mError!\033[0m Not included '-q' parameter." << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+		return 1;
+	}
+	char *original_queryFile = argv[i+1];
 
-    // Search for <-q> parameter.
-    	for (i=1; i < argc - 1; i++)
-    		if (strcmp(argv[i], "-q") == 0) break;
-    	if (i >= argc - 1) {
-          	cout << "\033[0;31mError!\033[0m Not included '-q' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-    		return 1;
-    	}
-    	char *original_queryFile = argv[i+1];
-
-    // Search for <-s> parameter.
-        for (i=1; i < argc - 1; i++)
-            if (strcmp(argv[i], "-s") == 0) break;
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-q' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        }
-        char *reduced_queryFile = argv[i+1];
-
-    // Search for <-o> parameter.
-    	for (i=1; i < argc - 1; i++)
-    		if (strcmp(argv[i], "-o") == 0) break;
-    	if (i >= argc - 1) {
-          	cout << "\033[0;31mError!\033[0m Not included '-o' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-    		return 1;
-    	}
-    	char *outputFile = argv[i+1];
-
-    // Search for <-k> parameter.
-    	for (i=1; i < argc - 1; i++)
-    		if (strcmp(argv[i], "-k") == 0) break;
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-k' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        } else if (!isNumber(argv[i+1])) {
-        // <-k> parameter is invalid.
-      	    cout << "\033[0;31mError!\033[0m Invalid value on '-k' parameter." << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;        
-        }
-        int k = atoi(argv[i+1]);
-
-    // Search for <-L> parameter.
-    	for (i=1; i < argc - 1; i++)
-    		if (strcmp(argv[i], "-L") == 0) break;
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-L' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        } else if (!isNumber(argv[i+1])) {
-        // <-L> parameter is invalid.
-      	    cout << "\033[0;31mError!\033[0m Invalid value on '-L' parameter." << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;        
-        }
-        int L = atoi(argv[i+1]);
-    } else {
-        // Search for <-d> parameter.
-        for (i=1; i < argc - 1; i++)
-            if (strcmp(argv[i], "-d") == 0) break;
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-d' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file> -q <query_file> -l1 <input_labels> -l2 <query_labels> -ο <output_file> -EMD" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        }
-        char *inputFile = argv[i+1];
-
-    // Search for <-q> parameter.
-        for (i=1; i < argc - 1; i++)
-            if (strcmp(argv[i], "-q") == 0) break;
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-q' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file> -q <query_file> -l1 <input_labels> -l2 <query_labels> -ο <output_file> -EMD" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        }
-        char *queryFile = argv[i+1];
-
-    // Search for <-o> parameter.
-        for (i=1; i < argc - 1; i++)
-            if (strcmp(argv[i], "-o") == 0) break;
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-o' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file> -q <query_file> -l1 <input_labels> -l2 <query_labels> -ο <output_file> -EMD" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        }
-        char *outputFile = argv[i+1];
-
-    // Search for <-l1> parameter.
-        for (i=1; i < argc - 1; i++)
-            if (strcmp(argv[i], "-l1") == 0) break;
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-l1' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file> -q <query_file> -l1 <input_labels> -l2 <query_labels> -ο <output_file> -EMD" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        }
-        char *input_labelFile = argv[i+1];
-
-    // Search for <-l2> parameter.
-        for (i=1; i < argc - 1; i++)
-            if (strcmp(argv[i], "-l2") == 0) break;
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-l2' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " -d <input_file> -q <query_file> -l1 <input_labels> -l2 <query_labels> -ο <output_file>" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        }
-        char *query_labelFile = argv[i+1];
+// Search for <-s> parameter.
+    for (i=1; i < argc - 1; i++)
+        if (strcmp(argv[i], "-s") == 0) break;
+    if (i >= argc - 1) {
+        cout << "\033[0;31mError!\033[0m Not included '-q' parameter." << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+        return 1;
     }
+    char *reduced_queryFile = argv[i+1];
+
+// Search for <-o> parameter.
+	for (i=1; i < argc - 1; i++)
+		if (strcmp(argv[i], "-o") == 0) break;
+	if (i >= argc - 1) {
+      	cout << "\033[0;31mError!\033[0m Not included '-o' parameter." << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+		return 1;
+	}
+	char *outputFile = argv[i+1];
+
+// Search for <-k> parameter.
+	for (i=1; i < argc - 1; i++)
+		if (strcmp(argv[i], "-k") == 0) break;
+    if (i >= argc - 1) {
+        cout << "\033[0;31mError!\033[0m Not included '-k' parameter." << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+        return 1;
+    } else if (!isNumber(argv[i+1])) {
+    // <-k> parameter is invalid.
+  	    cout << "\033[0;31mError!\033[0m Invalid value on '-k' parameter." << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+        return 1;        
+    }
+    int k = atoi(argv[i+1]);
+
+// Search for <-L> parameter.
+	for (i=1; i < argc - 1; i++)
+		if (strcmp(argv[i], "-L") == 0) break;
+    if (i >= argc - 1) {
+        cout << "\033[0;31mError!\033[0m Not included '-L' parameter." << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -q <query_file_original> -s <query_file_new> -ο <output_file> -k <int> -L <int>" << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+        return 1;
+    } else if (!isNumber(argv[i+1])) {
+    // <-L> parameter is invalid.
+  	    cout << "\033[0;31mError!\033[0m Invalid value on '-L' parameter." << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+        return 1;        
+    }
+    int L = atoi(argv[i+1]);
 
 // // Search for <-N> parameter.
     // int N = 1;
