@@ -14,7 +14,12 @@ class PandaC {
     public:
         // Creates a NumC object from the MNIST's data.
         static NumC<NumCDataType>* fromMNIST(char* filepath, int limit=NO_LIMIT);
+        static NumC<NumCDataType>* fromMNISTnew(char* filepath, int limit=NO_LIMIT);
         static NumC<NumCDataType>* fromMNISTlabels(char* filepath, int limit=NO_LIMIT);
 };
+
+template class PandaC<int>;
+template class PandaC<long>;
+template class PandaC<double>;
 
 #endif

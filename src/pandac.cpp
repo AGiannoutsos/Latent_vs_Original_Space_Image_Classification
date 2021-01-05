@@ -7,10 +7,6 @@
 
 using namespace std;
 
-template class PandaC<int>;
-template class PandaC<long>;
-template class PandaC<double>;
-
 template <typename NumCDataType>
 int PandaC<NumCDataType>::reverseInt(int num) {
     unsigned char c1, c2, c3, c4;
@@ -26,6 +22,13 @@ unsigned char reverseChar(unsigned char num) {
    num = (num & 0xCC) >> 2 | (num & 0x33) << 2;
    num = (num & 0xAA) >> 1 | (num & 0x55) << 1;
    return num;
+}
+
+int reverseShort(unsigned short num) {
+    unsigned char c1, c2;
+    c1 = num & 255;
+    c2 = (num >> 8) & 255;
+    return ((int)c1 << 8) + (int)c2;
 }
 
 template <typename NumCDataType>
@@ -64,6 +67,62 @@ NumC<NumCDataType>* PandaC<NumCDataType>::fromMNIST(char *filePath, int limit) {
             for( int j = 0; j < n_cols_of_matrix; j++){
                 // reverse the char pixel and store in int
                 pixelType =  (NumCDataType)reverseChar(image[j]);
+                data->addElement(image[j], i, j);
+            }
+        }
+
+    // Print file's info.
+        cout << "Rows: " << number_of_images << endl;
+        cout << "Pictures: " << n_rows_of_image << " x " << n_cols_of_image << endl;
+        cout << "----------------------------------------------------------" << endl;
+        // data->print();
+
+    // Free allocated space and return data's matrix.
+        free(image);
+        return data;
+    }
+
+// Unable to open file, return NULL.
+    perror("Error: PandaC::fromMNIST");
+    return NULL;
+}
+
+template <typename NumCDataType>
+NumC<NumCDataType>* PandaC<NumCDataType>::fromMNISTnew(char *filePath, int limit) {
+    ifstream file(filePath, ifstream::in | ifstream::binary);
+    if (file.is_open()) {
+        printf("Open file: %s\n", filePath);
+        int number_of_images = 0;
+        int n_cols_of_matrix = 0;
+        int n_rows_of_image  = 0;
+        int n_cols_of_image  = 0;
+        
+    // Ignore magic number.
+        file.seekg(sizeof(int), file.beg);
+
+    // Read the metadata.
+        file.read((char*) &number_of_images, sizeof(int));
+        number_of_images= reverseInt(number_of_images);
+        file.read((char*) &n_rows_of_image, sizeof(int));
+        n_rows_of_image = reverseInt(n_rows_of_image);
+        file.read((char*) &n_cols_of_image, sizeof(int));
+        n_cols_of_image = reverseInt(n_cols_of_image);
+
+    // initialize martix to store all the images' data.
+        n_cols_of_matrix = n_cols_of_image*n_rows_of_image;
+        if (limit != NO_LIMIT && number_of_images > limit) number_of_images = limit;
+        NumC<NumCDataType> *data = new NumC<NumCDataType>(number_of_images, n_cols_of_image*n_rows_of_image, true);
+
+    // read the pixels of every image.
+        NumCDataType pixelType;
+        short *image = (short*)malloc(n_cols_of_matrix*sizeof(short));
+        // int pixel;
+        for(int i=0;i<number_of_images; ++i) {
+            // read all the pixels of an image
+            file.read((char*) image, sizeof(short)*n_cols_of_matrix);
+            for( int j = 0; j < n_cols_of_matrix; j++){
+                // reverse the char pixel and store in int
+                pixelType =  (NumCDataType)reverseShort(image[j]);
                 data->addElement(pixelType, i, j);
             }
         }
