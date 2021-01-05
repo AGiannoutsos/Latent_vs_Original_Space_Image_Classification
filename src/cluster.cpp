@@ -164,7 +164,7 @@ int main(int argc, char** argv) {
         return 1;
     }
     // Read configuration file.
-    ConfigurationData clusters = readClusters(clustersFIle, original_inputData.getRows());
+    NumC<int> clusters = readClusters(clustersFIle, original_inputData.getRows());
     if (clusters.isEmpty()) {
         cout << "\033[0;31mexit program\033[0m" << endl;
         return 1;
