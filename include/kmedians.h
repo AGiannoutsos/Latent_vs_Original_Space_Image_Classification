@@ -46,6 +46,7 @@ typedef struct ConfigurationData{
 } ConfigurationData;
 
 ConfigurationData readConfiguration(char* configurationFile);
+NumC<int>* readClusters(char* clustersFile, int inputDataSize);
 
 
 template <typename NumCDataType> 

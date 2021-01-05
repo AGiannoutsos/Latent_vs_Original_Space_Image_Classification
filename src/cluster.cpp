@@ -34,77 +34,109 @@ int main(int argc, char** argv) {
 // Reading inline parameters.
     int i;
 
+// Search for <-d> parameter.
+    for (i=1; i < argc - 1; i++)
+        if (strcmp(argv[i], "-d") == 0) break;
+    if (i >= argc - 1) {
+        cout << "\033[0;31mError!\033[0m Not included '-d' parameter." << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -n <clusters_file> -c <configuration_file> -o <output_file>" << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+        return 1;
+    }
+    char *original_inputFile = argv[i+1];
+
 // Search for <-i> parameter.
 	for (i=1; i < argc - 1; i++)
 		if (strcmp(argv[i], "-i") == 0) break;
 	if (i >= argc - 1) {
       	cout << "\033[0;31mError!\033[0m Not included '-i' parameter." << endl;
-        cout << "Executable should be called with: " << argv[0] << " –i <input_file> –c <configuration_file> -o <output_file> -m <method: 'Classic' OR 'LSH' OR 'Hypercube'> -complete (optional)" << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -n <clusters_file> -c <configuration_file> -o <output_file>" << endl;
         cout << "\033[0;31mExit program.\033[0m" << endl;
 		return 1;
 	}
-	char *inputFile = argv[i+1];	
+	char *reduced_inputFile = argv[i+1];	
 
 // Search for <-c> parameter.
 	for (i=1; i < argc - 1; i++)
 		if (strcmp(argv[i], "-c") == 0) break;
 	if (i >= argc - 1) {
       	cout << "\033[0;31mError!\033[0m Not included '-c' parameter." << endl;
-        cout << "Executable should be called with: " << argv[0] << " –i <input_file> –c <configuration_file> -o <output_file> -m <method: 'Classic' OR 'LSH' OR 'Hypercube'> -complete (optional)" << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -n <clusters_file> -c <configuration_file> -o <output_file>" << endl;
         cout << "\033[0;31mExit program.\033[0m" << endl;
 		return 1;
 	}
 	char *configurationFile = argv[i+1];	
+
+// Search for <-n> parameter.
+    for (i=1; i < argc - 1; i++)
+        if (strcmp(argv[i], "-n") == 0) break;
+    if (i >= argc - 1) {
+        cout << "\033[0;31mError!\033[0m Not included '-n' parameter." << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -n <clusters_file> -c <configuration_file> -o <output_file>" << endl;
+        cout << "\033[0;31mExit program.\033[0m" << endl;
+        return 1;
+    }
+    char *clustersFile = argv[i+1];
 
 // Search for <-o> parameter.
 	for (i=1; i < argc - 1; i++)
 		if (strcmp(argv[i], "-o") == 0) break;
 	if (i >= argc - 1) {
       	cout << "\033[0;31mError!\033[0m Not included '-o' parameter." << endl;
-        cout << "Executable should be called with: " << argv[0] << " –i <input_file> –c <configuration_file> -o <output_file> -m <method: 'Classic' OR 'LSH' OR 'Hypercube'> -complete (optional)" << endl;
+        cout << "Executable should be called with: " << argv[0] << " -d <input_file_original> -i <input_file_new> -n <clusters_file> -c <configuration_file> -o <output_file>" << endl;
         cout << "\033[0;31mExit program.\033[0m" << endl;
 		return 1;
 	}
 	char *outputFile = argv[i+1];
 
-// Search for <-m> parameter.
-	for (i=1; i < argc - 1; i++)
-		if (strcmp(argv[i], "-m") == 0) break;
-	if (i < argc - 1) {
-        if (i >= argc - 1) {
-            cout << "\033[0;31mError!\033[0m Not included '-m' parameter." << endl;
-            cout << "Executable should be called with: " << argv[0] << " –i <input_file> –c <configuration_file> -o <output_file> -m <method: 'Classic' OR 'LSH' OR 'Hypercube'> -complete (optional)" << endl;
-            cout << "\033[0;31mExit program.\033[0m" << endl;
-            return 1;
-        }
-	}
-    if (!strcmp(argv[i+1], (char*) "Classic") && !strcmp(argv[i+1], (char*) "LSH") && !strcmp(argv[i+1], (char*) "Hypercube")) {
-        cout << "\033[0;31mError!\033[0m Invalid method.\n" << endl;
-        cout << "\033[0;31mExit program.\033[0m" << endl;
-        return 1;
-    }
-	char *method = argv[i+1];
+// // Search for <-m> parameter.
+// 	for (i=1; i < argc - 1; i++)
+// 		if (strcmp(argv[i], "-m") == 0) break;
+// 	if (i < argc - 1) {
+//         if (i >= argc - 1) {
+//             cout << "\033[0;31mError!\033[0m Not included '-m' parameter." << endl;
+//             cout << "Executable should be called with: " << argv[0] << " –i <input_file> –c <configuration_file> -o <output_file> -m <method: 'Classic' OR 'LSH' OR 'Hypercube'> -complete (optional)" << endl;
+//             cout << "\033[0;31mExit program.\033[0m" << endl;
+//             return 1;
+//         }
+// 	}
+//     if (!strcmp(argv[i+1], (char*) "Classic") && !strcmp(argv[i+1], (char*) "LSH") && !strcmp(argv[i+1], (char*) "Hypercube")) {
+//         cout << "\033[0;31mError!\033[0m Invalid method.\n" << endl;
+//         cout << "\033[0;31mExit program.\033[0m" << endl;
+//         return 1;
+//     }
+// 	char *method = argv[i+1];
 
-// Search for <-complete> parameter.
-    bool complete = false;
-	for (i=1; i < argc; i++)
-		if (strcmp(argv[i], "-complete") == 0) break;
-	if (i < argc) {
-        complete = true;
-    }
+// // Search for <-complete> parameter.
+//     bool complete = false;
+// 	for (i=1; i < argc; i++)
+// 		if (strcmp(argv[i], "-complete") == 0) break;
+// 	if (i < argc) {
+//         complete = true;
+//     }
 
 //------------------------------------------------------------------------------------
-// Reading input file.
+// Reading input files.
 
     // Check that input file exists.
-    if(access(inputFile, F_OK) == -1) {
-        perror("\033[0;31mError\033[0m: Unable to open the input file");
+    if(access(original_inputFile, F_OK) == -1) {
+        perror("\033[0;31mError\033[0m: Unable to open the original input file");
         cout << "\033[0;31mexit program\033[0m" << endl;
         return 1;
     }
     cout << "\033[0;36mRunning Cluster :)\033[0m" << endl << endl;
     // Read input file with PandaC.
-    NumC<int>* inputData = PandaC<int>::fromMNIST(inputFile);
+    NumC<int>* original_inputData = PandaC<int>::fromMNIST(original_inputFile);
+
+    // Check that input file exists.
+    if(access(reduced_inputFile, F_OK) == -1) {
+        perror("\033[0;31mError\033[0m: Unable to open the new input file");
+        cout << "\033[0;31mexit program\033[0m" << endl;
+        return 1;
+    }
+    cout << "\033[0;36mRunning Cluster :)\033[0m" << endl << endl;
+    // Read input file with PandaC.
+    NumC<int>* reduced_inputData = PandaC<int>::fromMNIST(reduced_inputFile);
 
 //------------------------------------------------------------------------------------
 // Reading configuration file.
@@ -118,6 +150,22 @@ int main(int argc, char** argv) {
     // Read configuration file.
     ConfigurationData conf = readConfiguration(configurationFile);
     if (conf.isEmpty()) {
+        cout << "\033[0;31mexit program\033[0m" << endl;
+        return 1;
+    }
+
+//------------------------------------------------------------------------------------
+// Reading clusters from clustersFIle.
+
+    // Check that configurationn file exists.
+    if(access(clustersFIle, F_OK) == -1) {
+        perror("\033[0;31mError\033[0m: Unable to open the clusters file");
+        cout << "\033[0;31mexit program\033[0m" << endl;
+        return 1;
+    }
+    // Read configuration file.
+    ConfigurationData clusters = readClusters(clustersFIle, original_inputData.getRows());
+    if (clusters.isEmpty()) {
         cout << "\033[0;31mexit program\033[0m" << endl;
         return 1;
     }

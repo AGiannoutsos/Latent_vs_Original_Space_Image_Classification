@@ -346,8 +346,8 @@ def main():
         if answer == 'y' or answer == 'Y':
             validInput = False
             while not validInput:
-                # model_path = input(bcolors.OKCYAN+'Please add your model\'s path: '+bcolors.ENDC)
                 model_path = 'models/autoencoder_10.h5'
+                # model_path = input(bcolors.OKCYAN+'Please add your model\'s path: '+bcolors.ENDC)
                 if os.path.isfile(model_path):
                     autoencoder = get_Autoencoder(model_path, data.shape[1:])
                     existed_model = True

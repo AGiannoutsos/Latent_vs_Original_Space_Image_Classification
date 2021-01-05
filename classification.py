@@ -269,6 +269,17 @@ def main():
             print(bcolors.WARNING+'Executable should be called:', sys.argv[0], ' –d <training_set> –dl <training_labels> -t <test_set> -tl <test_labels> -model <autoencoder_h5>'+bcolors.ENDC)
             sys.exit()
         encoder = sys.argv[sys.argv.index('-model')+1]
+    # <-output> argument
+    if '-output' not in sys.argv:
+        print(bcolors.FAIL+'Error: missing argument <-output>.'+bcolors.ENDC)
+        print(bcolors.WARNING+'Executable should be called:', sys.argv[0], ' –d <training_set> –dl <training_labels> -t <test_set> -tl <test_labels> -model <autoencoder_h5> -output <outputFile>'+bcolors.ENDC)
+        sys.exit()
+    else:
+        if sys.argv.index('-output') == len(sys.argv)-1:
+            print(bcolors.FAIL+'Error: invalid arguments.'+bcolors.ENDC)
+            print(bcolors.WARNING+'Executable should be called:', sys.argv[0], ' –d <training_set> –dl <training_labels> -t <test_set> -tl <test_labels> -model <autoencoder_h5> -output <outputFile>'+bcolors.ENDC)
+            sys.exit()
+        outputFile = sys.argv[sys.argv.index('-output')+1]
 
     # Reading training and test sets
     if not os.path.isfile(datasetFile):
@@ -301,15 +312,15 @@ def main():
     if answer == 'y' or answer == 'Y':
         validInput = False
         while not validInput:
-            model_info = input(bcolors.OKCYAN+'Please add your model\'s path: '+bcolors.ENDC)
             # model_info = "models/large_encoder_small_dense_classifier.h5"
+            model_info = input(bcolors.OKCYAN+'Please add your model\'s path: '+bcolors.ENDC)
             if os.path.exists(model_info):
                 validInput = True
             else:
                 print(bcolors.FAIL+'Error: invalid path.'+bcolors.ENDC)
         print(bcolors.OKCYAN+'Images classification.'+bcolors.ENDC)
         model = load_model(model_info)
-        prediction_hot = model.predict(train_X[:,:,:,:])
+        prediction_hot = model.predict(train_X[:1000,:,:,:])
         predictions = np.argmax(prediction_hot, axis=1)
 
         # get the clustres
@@ -321,7 +332,7 @@ def main():
             clusters_lists.append( np.where(predictions == cluster)[0].tolist() ) 
 
         # create file to print results
-        with open("clusters", "w") as f:
+        with open(outputFile, "w") as f:
             for i,cluster in enumerate(clusters_lists):
                 output = "CLUSTER-%d { size: %d, " % (i+1, len(cluster))
                 output += ", ".join(str(x) for x in cluster)
