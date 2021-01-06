@@ -14,7 +14,7 @@
 using namespace std;
 
 // Extracts the results to output file.
-bool extractResults(char* outputFile, Results* results_original, Results* results_reduced, Results* true_results);
+bool extractResults(char* outputFile, Results* results_original, Results* results_reduced, Results* true_results, NumC<int>* original_inputData, NumC<int>* original_queryData);
 
 // Returns true if the string represents a non-negative number, eitherwise returns false.
 bool isNumber(char *word) {
@@ -159,7 +159,7 @@ int main(int argc, char** argv) {
     }
     cout << "\033[0;36mRunning LSH :)\033[0m" << endl << endl;
     // Read input file with PandaC.
-    NumC<int>* original_inputData = PandaC<int>::fromMNIST(original_inputFile, 1000);
+    NumC<int>* original_inputData = PandaC<int>::fromMNIST(original_inputFile, 10000);
 
     // Check that input file exists.
     if(access(reduced_inputFile, F_OK) == -1) {
@@ -169,7 +169,8 @@ int main(int argc, char** argv) {
     }
     cout << "\033[0;36mRunning LSH :)\033[0m" << endl << endl;
     // Read input file with PandaC.
-    NumC<int>* reduced_inputData = PandaC<int>::fromMNISTnew(reduced_inputFile, 1000);
+    NumC<int>* reduced_inputData = PandaC<int>::fromMNISTnew(reduced_inputFile, 10000);
+    // reduced_inputData->print();
 
 //------------------------------------------------------------------------------------
 // Reading query files.
@@ -190,13 +191,13 @@ int main(int argc, char** argv) {
         return 1;
     }
     // Read query file with PandaC.
-    NumC<int>* reduced_queryData = PandaC<int>::fromMNIST(reduced_queryFile, 10);
+    NumC<int>* reduced_queryData = PandaC<int>::fromMNISTnew(reduced_queryFile, 10);
 
 //------------------------------------------------------------------------------------
 // Making predictions.
 
 char line[128], *answer;
-Results *knn_results_original, *knn_results_reduced, *true_results;
+Results *lsh_results_original, *knn_results_reduced, *true_results;
 vector<Results*> r_results;
 
     do {
@@ -204,30 +205,29 @@ vector<Results*> r_results;
     //------------------------------------------------------------------------------------
     // Call LSHashing classifier and train it.
 
-        LSHashing<int> lsh_original(L, k, 40000);
-        LSHashing<int> lsh_reduced(L, k, 40000);
+        LSHashing<int> lsh_original(L, k, 20000);
         lsh_original.fit_transform(original_inputData);
-        lsh_reduced.fit_transform(reduced_inputData);
 
     //------------------------------------------------------------------------------------
     // Call exhaustive knn classifier and train it.
 
-        ExhaustiveKnn<int> exhaustive_knn(original_inputData, 1);
+        ExhaustiveKnn<int> exhaustive_original(original_inputData, 1);
+        ExhaustiveKnn<int> exhaustive_reduced(reduced_inputData, 1);
 
     //------------------------------------------------------------------------------------
     // Execute Predictions and extract results to output file.
 
         // Execute k-NN prediction.
-        knn_results_original = lsh_original.predict_knn(original_queryData, 1);
-        knn_results_reduced = lsh_reduced.predict_knn(reduced_inputData, 1);
+        lsh_results_original = lsh_original.predict_knn(original_queryData, 1);
+        knn_results_reduced = exhaustive_reduced.predict_knn(reduced_queryData, 1);
         // Execute Exhaustive KNN search.
-        true_results = exhaustive_knn.predict_knn(original_queryData);
+        true_results = exhaustive_original.predict_knn(original_queryData, 1);
         
         // // Execute Range Search.
         // r_results = lsh.predict_rs(original_queryData, R);
 
         // // Extract results on output file.
-        if (extractResults(outputFile, knn_results_original, knn_results_reduced, true_results)) {
+        if (extractResults(outputFile, lsh_results_original, knn_results_reduced, true_results, original_inputData, original_queryData) ) {
             cout << "Results are extracted in file: " << outputFile << endl;
         }
 
@@ -236,7 +236,7 @@ vector<Results*> r_results;
 
         delete original_queryData;
         delete reduced_queryData;
-        delete knn_results_original;
+        delete lsh_results_original;
         delete knn_results_reduced;
         delete true_results;
         for (int i=0; i < (int) r_results.size(); i++) {
@@ -296,7 +296,7 @@ vector<Results*> r_results;
     return 0;
 }
 
-bool extractResults(char* outputFile, Results* results_original, Results* results_reduced, Results *true_results) {
+bool extractResults(char* outputFile, Results* results_original, Results* results_reduced, Results *true_results, NumC<int>* original_inputData, NumC<int>* original_queryData) {
     // NumC<int>* inputDatalabels = PandaC<int>::fromMNISTlabels((char*) "./doc/input/train-labels-idx1-ubyte");
 
     // Check that output file exists.
@@ -306,12 +306,13 @@ bool extractResults(char* outputFile, Results* results_original, Results* result
         return false;
     }
 
-    double sumDistanceReduced = 0;
+    double sumDistanceReducedRatio = 0;
     double sumTimeReduced = 0;
-    double sumDistanceLSH = 0;
+    double sumDistanceLSHRatio = 0;
     double sumTimeLSH = 0;
     double sumDistanceTrue = 0;
     double sumTimeTrue = 0;
+    NumCDistType originalDistance = 0;
     for (int i=0; i < results_original->resultsIndexArray.getRows(); i++) {
         output << "Query: " << i+1 << endl;
 
@@ -322,52 +323,61 @@ bool extractResults(char* outputFile, Results* results_original, Results* result
         // // output << "  Nearest neighbor-" << j+1 << ": " << results->resultsIndexArray.getElement(i, j) << " label: " << inputDatalabels->getElement(results->resultsIndexArray.getElement(i, j) ,0) << " true label: " << inputDatalabels->getElement(true_results->resultsIndexArray.getElement(i, j) ,0)<<endl;
         
         output << "   distanceReduced:  " << results_reduced->resultsDistArray.getElement(i, 0) << endl;
-        sumDistanceReduced += results_reduced->resultsDistArray.getElement(i, 0);
+        originalDistance = NumC<int>::dist(original_inputData->getVector(results_reduced->resultsIndexArray.getElement(i,0)), original_queryData->getVector(i), 1);
+        sumDistanceReducedRatio += (originalDistance / true_results->resultsDistArray.getElement(i, 0));
         output << "   distanceLSH:  " << results_original->resultsDistArray.getElement(i, 0) << endl;
-        sumDistanceLSH += results_original->resultsDistArray.getElement(i, 0);
+        sumDistanceLSHRatio += (results_original->resultsDistArray.getElement(i, 0) / true_results->resultsDistArray.getElement(i, 0));
         output << "   distanceTrue: " << true_results->resultsDistArray.getElement(i, 0) << endl;
         sumDistanceTrue += true_results->resultsDistArray.getElement(i, 0);
         
-        output << "  tReduced: " << results_reduced->executionTimeArray.getElement(i, 0) << endl;
+        
         sumTimeReduced += results_reduced->executionTimeArray.getElement(i, 0);
-        output << "  tLSH: " << results_original->executionTimeArray.getElement(i, 0) << endl;
         sumTimeLSH += results_original->executionTimeArray.getElement(i, 0);
-        output << "  tTrue: " << true_results->executionTimeArray.getElement(i, 0) << endl;
         sumTimeTrue += true_results->executionTimeArray.getElement(i, 0);
         
-        // output << "  " << R << "-near neighbors:" << endl;
-        // for (int j=0; j < r_results[i]->resultsIndexArray.getCols(); j++) {
-        //     output << "    " << r_results[i]->resultsIndexArray.getElement(0, j) << endl;
-        //     // output << "    " << r_results[i]->resultsIndexArray.getElement(0, j) << " label: " << inputDatalabels->getElement(r_results[i]->resultsIndexArray.getElement(0, j) ,0)<<endl;
-        // }
-        // output << endl;
     }
+
+    output<<endl;
+    output << "tReduced: " << sumTimeReduced << endl;
+    output << "tLSH: " << sumTimeLSH << endl;
+    output << "tTrue: " << sumTimeTrue << endl;
+    output << "Approximation Factor LSH: " << sumDistanceLSHRatio / results_original->resultsIndexArray.getRows() << endl;
+    output << "Approximation Factor Reduced: " << sumDistanceReducedRatio / results_original->resultsIndexArray.getRows() << endl;
+    output<<endl;
+
+    cout<<endl;
+    cout << "tReduced: " << sumTimeReduced << endl;
+    cout << "tLSH: " << sumTimeLSH << endl;
+    cout << "tTrue: " << sumTimeTrue << endl;
+    cout << "Approximation Factor LSH: " << sumDistanceLSHRatio / results_original->resultsIndexArray.getRows() << endl;
+    cout << "Approximation Factor Reduced: " << sumDistanceReducedRatio / results_original->resultsIndexArray.getRows() << endl;
+    cout<<endl;
 
     // Printing Score of prediction.
     cout << "Final Exhaustive vs LSH Score:" << endl;
 
-    cout << "Average LSH distance on reduced dataset: " << (double) sumDistanceReduced/(1*results_original->resultsIndexArray.getRows()) << endl;
-    cout << "Average LSH distance on original dataset: " << (double) sumDistanceLSH/(1*results_original->resultsIndexArray.getRows()) << endl;
-    cout << "Average True distance: " << (double) sumDistanceTrue/(1*results_original->resultsIndexArray.getRows()) << endl;
+    // cout << "Average True distance on reduced dataset: " << (double) sumDistanceReducedRatio/(1*results_original->resultsIndexArray.getRows()) << endl;
+    // cout << "Average LSH distance on original dataset: " << (double) sumDistanceLSHRatio/(1*results_original->resultsIndexArray.getRows()) << endl;
+    // cout << "Average True distance: " << (double) sumDistanceTrue/(1*results_original->resultsIndexArray.getRows()) << endl;
     
-    cout << "LSH(Reduced)/True distance: " << (double) sumDistanceReduced/sumDistanceTrue << " (LSH has better accuracy when this number is inclined to 1)" << endl;
-    cout << "LSH(Original)/True distance: " << (double) sumDistanceLSH/sumDistanceTrue << " (LSH has better accuracy when this number is inclined to 1)" << endl;
+    cout << "True(Reduced)/True distance: " << (double) sumDistanceReducedRatio / results_original->resultsIndexArray.getRows() << " (LSH has better accuracy when this number is inclined to 1)" << endl;
+    cout << "LSH(Original)/True distance: " << (double) sumDistanceLSHRatio / results_original->resultsIndexArray.getRows() << " (LSH has better accuracy when this number is inclined to 1)" << endl;
     
-    cout << "LSH(Reduced)'s fault is " << (int) ((((double) sumDistanceReduced/sumDistanceTrue)-1)*100) << "% on average prediction." << endl;
-    cout << "LSH(Original)'s fault is " << (int) ((((double) sumDistanceLSH/sumDistanceTrue)-1)*100) << "% on average prediction." << endl;
+    cout << "True(Reduced)'s fault is " << (int) ((((double) sumDistanceReducedRatio/ results_original->resultsIndexArray.getRows() )-1)*100) << "% on average prediction." << endl;
+    cout << "LSH(Original)'s fault is " << (int) ((((double) sumDistanceLSHRatio / results_original->resultsIndexArray.getRows() )-1)*100) << "% on average prediction." << endl;
     cout << endl;
     
-    cout << "Average LSH Time on reduced dataset: " << (double) sumTimeReduced/results_reduced->resultsIndexArray.getRows() << endl;
+    cout << "Average Time on reduced dataset: " << (double) sumTimeReduced/results_reduced->resultsIndexArray.getRows() << endl;
     cout << "Average True Time on original dataset: " << (double) sumTimeTrue/results_original->resultsIndexArray.getRows() << endl;
     
-    cout << "LSH(Reduced)/True Time: " << (double) sumTimeReduced/sumTimeTrue << " (LSH is faster when this number is inclined to 0)" << endl;
+    cout << "True(Reduced)/True Time: " << (double) sumTimeReduced/sumTimeTrue << " (LSH is faster when this number is inclined to 0)" << endl;
     cout << "LSH(Original)/True Time: " << (double) sumTimeLSH/sumTimeTrue << " (LSH is faster when this number is inclined to 0)" << endl;
     
     if (sumTimeLSH > sumTimeTrue) {
-        cout << "LSH(Reduced)'s time is " << (int) ((((double) sumTimeReduced/sumTimeTrue)-1)*100) << "% slower than true." << endl;
+        cout << "True(Reduced)'s time is " << (int) ((((double) sumTimeReduced/sumTimeTrue)-1)*100) << "% slower than true." << endl;
         cout << "LSH(Original)'s time is " << (int) ((((double) sumTimeLSH/sumTimeTrue)-1)*100) << "% slower than true." << endl;
     } else {
-        cout << "LSH(Reduced)'s time is " << (int) ((1-((double) sumTimeReduced/sumTimeTrue))*100) << "% faster than true." << endl;
+        cout << "True(Reduced)'s time is " << (int) ((1-((double) sumTimeReduced/sumTimeTrue))*100) << "% faster than true." << endl;
         cout << "LSH(Original)'s time is " << (int) ((1-((double) sumTimeLSH/sumTimeTrue))*100) << "% faster than true." << endl;
     }
     cout << endl;

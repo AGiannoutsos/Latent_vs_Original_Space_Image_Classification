@@ -1,4 +1,4 @@
-
+# python3 classification.py -d data/train-images-idx3-ubyte -dl data/train-labels-idx1-ubyte -t data/t10k-images-idx3-ubyte -tl data/t10k-labels-idx1-ubyte -model models/small_model.h5 -output data/clusters.txt
 # import needed packages
 import numpy as np
 import os
@@ -8,6 +8,7 @@ import json
 from array import array as pyarray
 # import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
+import keras
 from keras.utils import to_categorical, normalize
 from keras.models import load_model
 # inport our files
@@ -84,7 +85,7 @@ def read_hyperparameters():
                     except ValueError:
                         print(bcolors.FAIL+'Error: bad configuration file.'+bcolors.ENDC)
             else:
-                print(bcolors.FAIL+'Error: invalid path.'+bcolors.ENDC)
+                print(bcolors.FAIL+'Error: invalid path 1.'+bcolors.ENDC)
     # Define the dictionary with model's info
     model_info = {}
     
@@ -283,19 +284,19 @@ def main():
 
     # Reading training and test sets
     if not os.path.isfile(datasetFile):
-        print(bcolors.FAIL+'Error: invalid path.'+bcolors.ENDC)
+        print(bcolors.FAIL+'Error: invalid path 2.'+bcolors.ENDC)
         sys.exit()
     train_X = normalize(load_mnist(datasetFile, type='data'))
     if not os.path.isfile(dlabelsFile):
-        print(bcolors.FAIL+'Error: invalid path.'+bcolors.ENDC)
+        print(bcolors.FAIL+'Error: invalid path 3.'+bcolors.ENDC)
         sys.exit()
     train_Y = to_categorical(load_mnist(dlabelsFile, type='labels'))
     if not os.path.isfile(testsetFile):
-        print(bcolors.FAIL+'Error: invalid path.'+bcolors.ENDC)
+        print(bcolors.FAIL+'Error: invalid path 4.'+bcolors.ENDC)
         sys.exit()
     test_X = normalize(load_mnist(testsetFile, type='data'))
     if not os.path.isfile(tlabelsFile):
-        print(bcolors.FAIL+'Error: invalid path.'+bcolors.ENDC)
+        print(bcolors.FAIL+'Error: invalid path 5.'+bcolors.ENDC)
         sys.exit()
     test_Y = to_categorical(load_mnist(tlabelsFile, type='labels'))
 
@@ -317,10 +318,10 @@ def main():
             if os.path.exists(model_info):
                 validInput = True
             else:
-                print(bcolors.FAIL+'Error: invalid path.'+bcolors.ENDC)
+                print(bcolors.FAIL+'Error: invalid path 6.'+bcolors.ENDC)
         print(bcolors.OKCYAN+'Images classification.'+bcolors.ENDC)
         model = load_model(model_info)
-        prediction_hot = model.predict(train_X[:1000,:,:,:])
+        prediction_hot = model.predict(train_X[:,:,:,:])
         predictions = np.argmax(prediction_hot, axis=1)
 
         # get the clustres

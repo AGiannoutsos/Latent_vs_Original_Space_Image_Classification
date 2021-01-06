@@ -82,6 +82,7 @@ class Kmedians {
         void transform_LLOYDS_CLUSTERING();
         void transform_LSH_CLUSTERING();
         void transform_HC_CLUSTERING();
+        void transform_CLUSTERS();
 
     public:
         Kmedians(ConfigurationData configurationData, int maxIterations=MAX_ITER, NumCDistType error=ERROR);
@@ -94,6 +95,8 @@ class Kmedians {
         void fit(NumC<NumCDataType>* trainData);
         void transform(ClusteringType clusteringType);
         void fit_transform(NumC<NumCDataType>* trainData, ClusteringType clusteringType);
+        void fit_clusters(NumC<NumCDataType>* clusters);
+        void getLastResultsClusters(NumC<NumCDataType>* clusters);
 
         NumC<NumCDataType>* getCentroids();
         std::vector<Results*>  getResults();

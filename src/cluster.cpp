@@ -126,7 +126,7 @@ int main(int argc, char** argv) {
     }
     cout << "\033[0;36mRunning Cluster :)\033[0m" << endl << endl;
     // Read input file with PandaC.
-    NumC<int>* original_inputData = PandaC<int>::fromMNIST(original_inputFile);
+    NumC<int>* original_inputData = PandaC<int>::fromMNIST(original_inputFile, 2000);
 
     // Check that input file exists.
     if(access(reduced_inputFile, F_OK) == -1) {
@@ -136,7 +136,7 @@ int main(int argc, char** argv) {
     }
     cout << "\033[0;36mRunning Cluster :)\033[0m" << endl << endl;
     // Read input file with PandaC.
-    NumC<int>* reduced_inputData = PandaC<int>::fromMNIST(reduced_inputFile);
+    NumC<int>* reduced_inputData = PandaC<int>::fromMNISTnew(reduced_inputFile, 2000);
 
 //------------------------------------------------------------------------------------
 // Reading configuration file.
@@ -158,17 +158,15 @@ int main(int argc, char** argv) {
 // Reading clusters from clustersFIle.
 
     // Check that configurationn file exists.
-    if(access(clustersFIle, F_OK) == -1) {
+    if(access(clustersFile, F_OK) == -1) {
         perror("\033[0;31mError\033[0m: Unable to open the clusters file");
         cout << "\033[0;31mexit program\033[0m" << endl;
         return 1;
     }
     // Read configuration file.
-    NumC<int> clusters = readClusters(clustersFIle, original_inputData.getRows());
-    if (clusters.isEmpty()) {
-        cout << "\033[0;31mexit program\033[0m" << endl;
-        return 1;
-    }
+    NumC<int>* clusters = readClusters(clustersFile, original_inputData->getRows());
+    
+
 
 //------------------------------------------------------------------------------------
 // Making predictions.
@@ -178,19 +176,58 @@ int main(int argc, char** argv) {
 //------------------------------------------------------------------------------------
 // Call K-Medians and train it.
 
-    Kmedians<int> kMedians(conf);
-    if (!strcmp(method, (char*) "Classic")) {
-        kMedians.fit_transform(inputData, LLOYDS_CLUSTERING);
-    } else if (!strcmp(method, (char*) "LSH")) {
-        kMedians.fit_transform(inputData, LSH_CLUSTERING);
-    } else if (!strcmp(method, (char*) "Hypercube")) {
-        kMedians.fit_transform(inputData, HC_CLUSTERING);
-    }
+    // Kmedians<int> kMedians(conf);
+    // if (!strcmp(method, (char*) "Classic")) {
+    //     kMedians.fit_transform(inputData, LLOYDS_CLUSTERING);
+    // } else if (!strcmp(method, (char*) "LSH")) {
+    //     kMedians.fit_transform(inputData, LSH_CLUSTERING);
+    // } else if (!strcmp(method, (char*) "Hypercube")) {
+    //     kMedians.fit_transform(inputData, HC_CLUSTERING);
+    // }
+
+    Kmedians<int> original_space(conf);
+    Kmedians<int> new_space(conf);
+    Kmedians<int> classes_as_clusters(conf);
+
+    cout <<endl<< "\033[0;36mNEW SPACE\033[0m" << endl;
+    new_space.fit_transform(reduced_inputData, LLOYDS_CLUSTERING);
+    // get clusters and start from all over again to compute in the original space
+    NumC<int>* new_space_clusters = new NumC<int>(reduced_inputData->getRows(), 1, false);
+    new_space.getLastResultsClusters(new_space_clusters);
+    Kmedians<int> new_space_to_original(conf);
+    new_space_to_original.fit(original_inputData);
+    new_space_to_original.fit_clusters(new_space_clusters);
+    cout << new_space_to_original.getObjectiveCost() <<endl;
+    vector<NumCDistType> silhouette_new_space = new_space_to_original.getSilhouettes();
+    // for (int i=0; i < 10; i++) {
+    //     cout << silhouette_new_space[i] << ", ";
+    // }
+    // cout << silhouette_new_space[10] << "]" << endl; //!+++
+
+
+
+    cout <<endl<< "\033[0;36mORIGINAL SPACE\033[0m" << endl;
+    original_space.fit_transform(original_inputData, LLOYDS_CLUSTERING);
+    cout << original_space.getObjectiveCost() <<endl;
+    
+
+
+    
+    cout <<endl<< "\033[0;36mCLASSES AS CLUSTERS\033[0m" << endl;
+    classes_as_clusters.fit(original_inputData);
+    classes_as_clusters.fit_clusters(clusters);
+    cout << classes_as_clusters.getObjectiveCost() <<endl;
+    vector<NumCDistType> silhouette_from_clusters = classes_as_clusters.getSilhouettes();
+    // for (int i=0; i < 10; i++) {
+    //     cout << silhouette_from_clusters[i] << ", ";
+    // }
+    // cout << silhouette_from_clusters[10] << "]" << endl; //!+++
+
 
 //------------------------------------------------------------------------------------
 // Execute Predictions and extract results to output file.
 
-    if (extractResults(outputFile, method, complete, &kMedians)) {
+    if (extractResults(outputFile, "Classic", true, &original_space)) {
         cout << "\033[0;36mResults are extracted in file: \033[0m" << outputFile << endl;
     }
 
@@ -198,7 +235,10 @@ int main(int argc, char** argv) {
 // End of program.
 
     //Free allocated Space.
-    delete inputData;
+    delete original_inputData;
+    delete reduced_inputData;
+    delete clusters;
+    delete new_space_clusters;
 
     cout << "-----------------------------------------------------------------" << endl;
     cout << "\033[0;36mExit program.\033[0m" << endl;

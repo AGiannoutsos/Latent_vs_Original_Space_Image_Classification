@@ -39,14 +39,14 @@ ConfigurationData readConfiguration(char* configurationFile) {
         } else if (!strcmp(command, (char*) "number_of_vector_hash_functions")) {
             confData.k = value;
         } else if (!strcmp(command, (char*) "max_number_M_hypercube")) {
-            confData.M = value;
         } else if (!strcmp(command, (char*) "number_of_hypercube_dimensions")) {
-            confData.d = value;
         } else if (!strcmp(command, (char*) "number_of_probes")) {
-            confData.probes = value;
         } else {
             // Not accepted configuration
         }
+        confData.probes = 10;
+        confData.d = 3;
+        confData.M = 1;
     }
     if (!feof(conf)) {
         cout << "\033[0;31mError!\033[0m Bad configuration file." << endl;
@@ -393,6 +393,7 @@ vector<NumCDistType> Kmedians<NumCDataType>::getSilhouettes(){
     NumCIndexType centroidIndex;
     NumCDistType  dist;
     Results* knnResults;
+
     for (int resultIndex = 0; resultIndex < results->resultsIndexArray.getRows(); resultIndex++){
 
         if (results->resultsIndexArray.getElement(resultIndex,1) == -1){
@@ -470,9 +471,68 @@ void Kmedians<NumCDataType>::medianCentroidsUpdate(Results* results){
 }
 
 template <typename NumCDataType> 
+void Kmedians<NumCDataType>::getLastResultsClusters(NumC<NumCDataType>* clusters) {
+    
+    // copy the last results
+    for (int i = 0; i < this->numOfPoints; i++){
+        clusters->addElement(this->lastResults->resultsIndexArray.getElement(i, 0), i, 0);
+    }
+}
+
+template <typename NumCDataType> 
 void Kmedians<NumCDataType>::fit_transform(NumC<NumCDataType>* trainData, ClusteringType clusteringType) {
     fit(trainData);
     transform(clusteringType);
+}
+
+template <typename NumCDataType> 
+void Kmedians<NumCDataType>::fit_clusters(NumC<NumCDataType>* clusters) {
+    
+    // init empty centroids
+    // allocate space for the first centroid
+    if (this->centroids != NULL) {
+        delete this->centroids;
+        this->centroids = NULL;
+    }
+    this->centroids = new NumC<NumCDataType>(this->numOfClusters, this->numOfDimensions);
+
+    // get the centroids
+    std::vector<NumCIndexType> medianVector;
+    medianVector.reserve(this->numOfPoints / this->numOfClusters);
+    NumCDataType medianElement = 0;
+    NumCDataType median = 0;
+    int size = 0;
+    
+    // for ever centroid
+    for (int centroidIndex = 0; centroidIndex < this->numOfClusters; centroidIndex++){
+        // and every dimension
+        for (int dimension = 0; dimension < this->numOfDimensions; dimension++){  
+            // get the values of its elements
+            medianVector.clear();
+            for (int resultsIndex = 0; resultsIndex < clusters->getRows(); resultsIndex++){
+                if ( clusters->getElement(resultsIndex, 0) ==  centroidIndex){
+                    medianElement = this->data->getElement(resultsIndex, dimension);
+                    medianVector.push_back(medianElement);
+                }
+            }
+            // and calculate median for that dimension
+            size = medianVector.size();
+            if (size != 0){
+                // get the upper boud of the index (index start at 0)
+                std::sort(medianVector.begin(), medianVector.end());
+                median = medianVector[size/2];
+                centroids->addElement( median, centroidIndex, dimension);      
+            }
+        }
+    }
+
+    // get last results
+    Results* results;
+    ExhaustiveKnn<NumCDataType>* knnEstimator = new ExhaustiveKnn<NumCDataType>(2);
+    knnEstimator->fit(this->centroids);
+    results = knnEstimator->predict_knn(this->data);
+    this->lastResults = results;
+    delete knnEstimator;
 }
 
 
@@ -626,6 +686,7 @@ void Kmedians<NumCDataType>::transform_LSH_CLUSTERING(){
     }
     delete lshEstimator;
 }
+
 
 // #include "../include/pandac.h"
 // int main(){
