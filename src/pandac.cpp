@@ -67,7 +67,7 @@ NumC<NumCDataType>* PandaC<NumCDataType>::fromMNIST(char *filePath, int limit) {
             for( int j = 0; j < n_cols_of_matrix; j++){
                 // reverse the char pixel and store in int
                 pixelType =  (NumCDataType)reverseChar(image[j]);
-                data->addElement(image[j], i, j);
+                data->addElement(pixelType, i, j);
             }
         }
 

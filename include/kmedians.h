@@ -61,7 +61,6 @@ class Kmedians {
         int numOfPoints;
         int maxIterations;
         NumCDistType error;
-        double transformTime;
         Results* lastResults;
 
         // hc and lsh parameters
@@ -85,6 +84,7 @@ class Kmedians {
         void transform_CLUSTERS();
 
     public:
+        double transformTime;
         Kmedians(ConfigurationData configurationData, int maxIterations=MAX_ITER, NumCDistType error=ERROR);
         // needs delete after configuration file
         Kmedians(int numOfClusters=10, int maxIterations=MAX_ITER, NumCDistType error=ERROR);

@@ -126,7 +126,7 @@ int main(int argc, char** argv) {
     }
     cout << "\033[0;36mRunning Cluster :)\033[0m" << endl << endl;
     // Read input file with PandaC.
-    NumC<int>* original_inputData = PandaC<int>::fromMNIST(original_inputFile, 2000);
+    NumC<int>* original_inputData = PandaC<int>::fromMNIST(original_inputFile, 10000);
 
     // Check that input file exists.
     if(access(reduced_inputFile, F_OK) == -1) {
@@ -136,7 +136,7 @@ int main(int argc, char** argv) {
     }
     cout << "\033[0;36mRunning Cluster :)\033[0m" << endl << endl;
     // Read input file with PandaC.
-    NumC<int>* reduced_inputData = PandaC<int>::fromMNISTnew(reduced_inputFile, 2000);
+    NumC<int>* reduced_inputData = PandaC<int>::fromMNISTnew(reduced_inputFile, 10000);
 
 //------------------------------------------------------------------------------------
 // Reading configuration file.
@@ -164,8 +164,17 @@ int main(int argc, char** argv) {
         return 1;
     }
     // Read configuration file.
+    cout <<original_inputData->getRows()<<endl;
     NumC<int>* clusters = readClusters(clustersFile, original_inputData->getRows());
     
+
+    // Check that output file exists.
+    ofstream output(outputFile, fstream::out);
+    if (!output.is_open()) {
+        perror("\033[0;31mError\033[0m: Unable to open output file");
+        return false;
+    }
+   
 
 
 //------------------------------------------------------------------------------------
@@ -175,20 +184,17 @@ int main(int argc, char** argv) {
 
 //------------------------------------------------------------------------------------
 // Call K-Medians and train it.
-
-    // Kmedians<int> kMedians(conf);
-    // if (!strcmp(method, (char*) "Classic")) {
-    //     kMedians.fit_transform(inputData, LLOYDS_CLUSTERING);
-    // } else if (!strcmp(method, (char*) "LSH")) {
-    //     kMedians.fit_transform(inputData, LSH_CLUSTERING);
-    // } else if (!strcmp(method, (char*) "Hypercube")) {
-    //     kMedians.fit_transform(inputData, HC_CLUSTERING);
-    // }
+// clustering_time: <double> //in seconds
+// Silhouette: [s1,...,si,...,sΚ, stotal]
+// Value of Objective Function: <double>
 
     Kmedians<int> original_space(conf);
     Kmedians<int> new_space(conf);
     Kmedians<int> classes_as_clusters(conf);
 
+    ///////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////NEW SPACE////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
     cout <<endl<< "\033[0;36mNEW SPACE\033[0m" << endl;
     new_space.fit_transform(reduced_inputData, LLOYDS_CLUSTERING);
     // get clusters and start from all over again to compute in the original space
@@ -197,39 +203,88 @@ int main(int argc, char** argv) {
     Kmedians<int> new_space_to_original(conf);
     new_space_to_original.fit(original_inputData);
     new_space_to_original.fit_clusters(new_space_clusters);
-    cout << new_space_to_original.getObjectiveCost() <<endl;
-    vector<NumCDistType> silhouette_new_space = new_space_to_original.getSilhouettes();
-    // for (int i=0; i < 10; i++) {
-    //     cout << silhouette_new_space[i] << ", ";
-    // }
-    // cout << silhouette_new_space[10] << "]" << endl; //!+++
+
+    // extract results
+    output << "NEW SPACE" <<endl;
+    NumC<int>* centroids = new_space_to_original.getCentroids();
+    vector<Results*> clusters_ = new_space_to_original.getResults();
+    vector<NumCDistType> silhouette = new_space_to_original.getSilhouettes();
+    for (int i=0; i < centroids->getRows(); i++) {
+        output << "  CLUSTER-" << i+1 << " {size: " << clusters_[i]->resultsIndexArray.getCols() << ", centroid: ";
+        NumC<int>::print(centroids->getVector(i), output);
+        output << "}" << endl; //!+++
+    }
+    output << "clustering_time: " << new_space.transformTime << endl; //!+++
+    output << "Silhouette: [ ";
+    cout << endl;
+    for (int i=0; i < centroids->getRows(); i++) {
+        output << silhouette[i] << ", ";
+    }
+    output << silhouette[centroids->getRows()] << "]" << endl; //!+++
+    output << "Value of Objective Function: "<< new_space_to_original.getObjectiveCost()<<endl<<endl;
+    // delete centroids;
+    for (int i=0; i < (int) clusters_.size(); i++) {
+        delete clusters_[i];
+    }
 
 
 
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////ORIGINAL SPACE//////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
     cout <<endl<< "\033[0;36mORIGINAL SPACE\033[0m" << endl;
     original_space.fit_transform(original_inputData, LLOYDS_CLUSTERING);
-    cout << original_space.getObjectiveCost() <<endl;
     
+    // extract results
+    output << "NEW SPACE" <<endl;
+    centroids = original_space.getCentroids();
+    clusters_ = original_space.getResults();
+    silhouette = original_space.getSilhouettes();
+    for (int i=0; i < centroids->getRows(); i++) {
+        output << "  CLUSTER-" << i+1 << " {size: " << clusters_[i]->resultsIndexArray.getCols() << ", centroid: ";
+        NumC<int>::print(centroids->getVector(i), output);
+        output << "}" << endl; //!+++
+    }
+    output << "clustering_time: " << clusters_[0]->executionTime << endl; //!+++
+    output << "Silhouette: [ ";
+    cout << endl;
+    for (int i=0; i < centroids->getRows(); i++) {
+        output << silhouette[i] << ", ";
+    }
+    output << silhouette[centroids->getRows()] << "]" << endl; //!+++
+    output << "Value of Objective Function: "<< original_space.getObjectiveCost()<<endl<<endl;
+    // delete centroids;
+    for (int i=0; i < (int) clusters_.size(); i++) {
+        delete clusters_[i];
+    }
 
 
-    
+    ///////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////CLASSES AS CLUSTERS//////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
     cout <<endl<< "\033[0;36mCLASSES AS CLUSTERS\033[0m" << endl;
     classes_as_clusters.fit(original_inputData);
     classes_as_clusters.fit_clusters(clusters);
-    cout << classes_as_clusters.getObjectiveCost() <<endl;
-    vector<NumCDistType> silhouette_from_clusters = classes_as_clusters.getSilhouettes();
-    // for (int i=0; i < 10; i++) {
-    //     cout << silhouette_from_clusters[i] << ", ";
-    // }
-    // cout << silhouette_from_clusters[10] << "]" << endl; //!+++
+
+    // extract results
+    silhouette = original_space.getSilhouettes();
+    output << "NEW SPACE" <<endl;
+    output << "Silhouette: [ ";
+    cout << endl;
+    for (int i=0; i < centroids->getRows(); i++) {
+        output << silhouette[i] << ", ";
+    }
+    output << silhouette[centroids->getRows()] << "]" << endl; //!+++
+    output << "Value of Objective Function: "<< classes_as_clusters.getObjectiveCost()<<endl<<endl;
 
 
 //------------------------------------------------------------------------------------
 // Execute Predictions and extract results to output file.
 
-    if (extractResults(outputFile, "Classic", true, &original_space)) {
-        cout << "\033[0;36mResults are extracted in file: \033[0m" << outputFile << endl;
-    }
+    // if (extractResults(outputFile, "Classic", true, &original_space)) {
+    //     cout << "\033[0;36mResults are extracted in file: \033[0m" << outputFile << endl;
+    // }
 
 //------------------------------------------------------------------------------------
 // End of program.
@@ -239,6 +294,7 @@ int main(int argc, char** argv) {
     delete reduced_inputData;
     delete clusters;
     delete new_space_clusters;
+    output.close();
 
     cout << "-----------------------------------------------------------------" << endl;
     cout << "\033[0;36mExit program.\033[0m" << endl;

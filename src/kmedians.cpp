@@ -59,7 +59,7 @@ ConfigurationData readConfiguration(char* configurationFile) {
 }
 
 NumC<int>* readClusters(char* clustersFile, int inputDataSize) {
-    NumC<int> *clusters = new NumC<int>(inputDataSize, 1);
+    NumC<int> *clusters = new NumC<int>(inputDataSize, 1, false);
     FILE *cFile = fopen(clustersFile, "r");
     
     char line[128];
@@ -219,7 +219,7 @@ void Kmedians<NumCDataType>::kmeansInit(){
         delete this->centroids;
         this->centroids = NULL;
     }
-    this->centroids = new NumC<NumCDataType>(1, this->numOfDimensions);
+    this->centroids = new NumC<NumCDataType>(1, this->numOfDimensions, false);
 
     ExhaustiveKnn<NumCDataType>* initEstimator = new ExhaustiveKnn<NumCDataType>(1);
     Results* results;
@@ -314,7 +314,6 @@ NumCDistType Kmedians<NumCDataType>::calculateSilhouette(NumCDistType distA, Num
 template <typename NumCDataType> 
 vector<NumCDistType> Kmedians<NumCDataType>::getSilhouettes(Results* results){
 
-
     vector< vector<NumCDistType> > silhouettes(this->numOfClusters);
     vector<NumCDistType> overallSilhouettes(this->numOfClusters);
     NumCDistType meanSilhouettes;
@@ -388,7 +387,6 @@ vector<NumCDistType> Kmedians<NumCDataType>::getSilhouettes(){
     ExhaustiveKnn<NumCDataType>* knnEstimator = new ExhaustiveKnn<NumCDataType>(2);
     knnEstimator->fit(this->centroids);
     Results* results = this->lastResults;
-
     // find the seconde nearest neighbour to fix results for the silouette
     NumCIndexType centroidIndex;
     NumCDistType  dist;
