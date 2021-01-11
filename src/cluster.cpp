@@ -268,7 +268,7 @@ int main(int argc, char** argv) {
     classes_as_clusters.fit_clusters(clusters);
 
     // extract results
-    silhouette = original_space.getSilhouettes();
+    silhouette = classes_as_clusters.getSilhouettes();
     output << "CLASSES AS CLUSTERS" <<endl;
     output << "Silhouette: [ ";
     cout << endl;
