@@ -182,7 +182,7 @@ int main(int argc, char** argv) {
         return 1;
     }
     // Read query file with PandaC.
-    NumC<int>* original_queryData = PandaC<int>::fromMNIST(original_queryFile, 10);
+    NumC<int>* original_queryData = PandaC<int>::fromMNIST(original_queryFile, 100);
 
     // Check that input file exists.
     if(access(reduced_queryFile, F_OK) == -1) {
@@ -191,7 +191,7 @@ int main(int argc, char** argv) {
         return 1;
     }
     // Read query file with PandaC.
-    NumC<int>* reduced_queryData = PandaC<int>::fromMNISTnew(reduced_queryFile, 10);
+    NumC<int>* reduced_queryData = PandaC<int>::fromMNISTnew(reduced_queryFile, 100);
 
 //------------------------------------------------------------------------------------
 // Making predictions.

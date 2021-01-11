@@ -1,77 +1,707 @@
 Query: 1
-  Nearest neighbor Reduced: 880
-  Nearest neighbor LSH: 2202
-  Nearest neighbor True: 2202
-   distanceReduced:  8361
-   distanceLSH:  4899
-   distanceTrue: 4899
+  Nearest neighbor Reduced: 9444
+  Nearest neighbor LSH: 1770
+  Nearest neighbor True: 1770
+   distanceReduced:  95411
+   distanceLSH:  10655
+   distanceTrue: 10655
 Query: 2
-  Nearest neighbor Reduced: 732
-  Nearest neighbor LSH: 2202
-  Nearest neighbor True: 2202
-   distanceReduced:  12875
-   distanceLSH:  6377
-   distanceTrue: 6377
+  Nearest neighbor Reduced: 2738
+  Nearest neighbor LSH: 7440
+  Nearest neighbor True: 5816
+   distanceReduced:  130817
+   distanceLSH:  21256
+   distanceTrue: 16359
 Query: 3
-  Nearest neighbor Reduced: 77
-  Nearest neighbor LSH: 7716
-  Nearest neighbor True: 7716
-   distanceReduced:  6158
-   distanceLSH:  3049
-   distanceTrue: 3049
+  Nearest neighbor Reduced: 6747
+  Nearest neighbor LSH: 1697
+  Nearest neighbor True: 1697
+   distanceReduced:  61868
+   distanceLSH:  5430
+   distanceTrue: 5430
 Query: 4
-  Nearest neighbor Reduced: 451
-  Nearest neighbor LSH: 2202
-  Nearest neighbor True: 2202
-   distanceReduced:  10419
-   distanceLSH:  5583
-   distanceTrue: 5583
+  Nearest neighbor Reduced: 3667
+  Nearest neighbor LSH: 3262
+  Nearest neighbor True: 3262
+   distanceReduced:  129199
+   distanceLSH:  13388
+   distanceTrue: 13388
 Query: 5
-  Nearest neighbor Reduced: 541
-  Nearest neighbor LSH: 2202
-  Nearest neighbor True: 2202
-   distanceReduced:  5962
-   distanceLSH:  5480
-   distanceTrue: 5480
+  Nearest neighbor Reduced: 5046
+  Nearest neighbor LSH: 2452
+  Nearest neighbor True: 5822
+   distanceReduced:  106305
+   distanceLSH:  13452
+   distanceTrue: 12646
 Query: 6
-  Nearest neighbor Reduced: 455
-  Nearest neighbor LSH: 9312
-  Nearest neighbor True: 9312
-   distanceReduced:  7018
-   distanceLSH:  2874
-   distanceTrue: 2874
+  Nearest neighbor Reduced: 4554
+  Nearest neighbor LSH: 4554
+  Nearest neighbor True: 4554
+   distanceReduced:  56711
+   distanceLSH:  5357
+   distanceTrue: 5357
 Query: 7
-  Nearest neighbor Reduced: 142
-  Nearest neighbor LSH: 2202
-  Nearest neighbor True: 2202
-   distanceReduced:  10720
-   distanceLSH:  5941
-   distanceTrue: 5941
+  Nearest neighbor Reduced: 7296
+  Nearest neighbor LSH: 3110
+  Nearest neighbor True: 3625
+   distanceReduced:  143745
+   distanceLSH:  16943
+   distanceTrue: 14994
 Query: 8
-  Nearest neighbor Reduced: 282
-  Nearest neighbor LSH: 2318
-  Nearest neighbor True: 2202
-   distanceReduced:  10470
-   distanceLSH:  6087
-   distanceTrue: 4795
+  Nearest neighbor Reduced: 3186
+  Nearest neighbor LSH: 4244
+  Nearest neighbor True: 3186
+   distanceReduced:  131028
+   distanceLSH:  15949
+   distanceTrue: 14378
 Query: 9
-  Nearest neighbor Reduced: 799
-  Nearest neighbor LSH: 2202
-  Nearest neighbor True: 2202
-   distanceReduced:  18433
-   distanceLSH:  6101
-   distanceTrue: 6101
+  Nearest neighbor Reduced: 8126
+  Nearest neighbor LSH: 4035
+  Nearest neighbor True: 4113
+   distanceReduced:  190604
+   distanceLSH:  26037
+   distanceTrue: 20780
 Query: 10
-  Nearest neighbor Reduced: 15
-  Nearest neighbor LSH: 2202
-  Nearest neighbor True: 2202
-   distanceReduced:  13268
-   distanceLSH:  6389
-   distanceTrue: 6389
+  Nearest neighbor Reduced: 5044
+  Nearest neighbor LSH: 2431
+  Nearest neighbor True: 2391
+   distanceReduced:  99178
+   distanceLSH:  15421
+   distanceTrue: 14567
+Query: 11
+  Nearest neighbor Reduced: 1530
+  Nearest neighbor LSH: 1530
+  Nearest neighbor True: 1530
+   distanceReduced:  106542
+   distanceLSH:  15645
+   distanceTrue: 15645
+Query: 12
+  Nearest neighbor Reduced: 1414
+  Nearest neighbor LSH: 2494
+  Nearest neighbor True: 3908
+   distanceReduced:  130558
+   distanceLSH:  18794
+   distanceTrue: 18746
+Query: 13
+  Nearest neighbor Reduced: 2370
+  Nearest neighbor LSH: 7975
+  Nearest neighbor True: 7975
+   distanceReduced:  95532
+   distanceLSH:  9915
+   distanceTrue: 9915
+Query: 14
+  Nearest neighbor Reduced: 8158
+  Nearest neighbor LSH: 7932
+  Nearest neighbor True: 2974
+   distanceReduced:  111658
+   distanceLSH:  16399
+   distanceTrue: 11257
+Query: 15
+  Nearest neighbor Reduced: 5012
+  Nearest neighbor LSH: 4944
+  Nearest neighbor True: 4944
+   distanceReduced:  77586
+   distanceLSH:  3330
+   distanceTrue: 3330
+Query: 16
+  Nearest neighbor Reduced: 6980
+  Nearest neighbor LSH: 1162
+  Nearest neighbor True: 8320
+   distanceReduced:  125661
+   distanceLSH:  18855
+   distanceTrue: 15983
+Query: 17
+  Nearest neighbor Reduced: 6376
+  Nearest neighbor LSH: 3232
+  Nearest neighbor True: 3232
+   distanceReduced:  112492
+   distanceLSH:  13312
+   distanceTrue: 13312
+Query: 18
+  Nearest neighbor Reduced: 8616
+  Nearest neighbor LSH: 9214
+  Nearest neighbor True: 6902
+   distanceReduced:  98233
+   distanceLSH:  11894
+   distanceTrue: 11182
+Query: 19
+  Nearest neighbor Reduced: 8756
+  Nearest neighbor LSH: 4783
+  Nearest neighbor True: 4471
+   distanceReduced:  172729
+   distanceLSH:  28226
+   distanceTrue: 21544
+Query: 20
+  Nearest neighbor Reduced: 4798
+  Nearest neighbor LSH: 1098
+  Nearest neighbor True: 2832
+   distanceReduced:  98546
+   distanceLSH:  11578
+   distanceTrue: 10924
+Query: 21
+  Nearest neighbor Reduced: 8837
+  Nearest neighbor LSH: 8845
+  Nearest neighbor True: 8845
+   distanceReduced:  103736
+   distanceLSH:  12125
+   distanceTrue: 12125
+Query: 22
+  Nearest neighbor Reduced: 9556
+  Nearest neighbor LSH: 9556
+  Nearest neighbor True: 1694
+   distanceReduced:  103967
+   distanceLSH:  13047
+   distanceTrue: 12259
+Query: 23
+  Nearest neighbor Reduced: 1782
+  Nearest neighbor LSH: 372
+  Nearest neighbor True: 1782
+   distanceReduced:  116157
+   distanceLSH:  21594
+   distanceTrue: 17928
+Query: 24
+  Nearest neighbor Reduced: 7964
+  Nearest neighbor LSH: 6527
+  Nearest neighbor True: 7390
+   distanceReduced:  127276
+   distanceLSH:  16174
+   distanceTrue: 14130
+Query: 25
+  Nearest neighbor Reduced: 8902
+  Nearest neighbor LSH: 5944
+  Nearest neighbor True: 5944
+   distanceReduced:  121054
+   distanceLSH:  12467
+   distanceTrue: 12467
+Query: 26
+  Nearest neighbor Reduced: 7985
+  Nearest neighbor LSH: 8901
+  Nearest neighbor True: 9544
+   distanceReduced:  117622
+   distanceLSH:  19014
+   distanceTrue: 17096
+Query: 27
+  Nearest neighbor Reduced: 4242
+  Nearest neighbor LSH: 4020
+  Nearest neighbor True: 4020
+   distanceReduced:  101124
+   distanceLSH:  9567
+   distanceTrue: 9567
+Query: 28
+  Nearest neighbor Reduced: 5046
+  Nearest neighbor LSH: 1738
+  Nearest neighbor True: 5046
+   distanceReduced:  105614
+   distanceLSH:  12896
+   distanceTrue: 12544
+Query: 29
+  Nearest neighbor Reduced: 3937
+  Nearest neighbor LSH: 582
+  Nearest neighbor True: 7882
+   distanceReduced:  120123
+   distanceLSH:  19113
+   distanceTrue: 14764
+Query: 30
+  Nearest neighbor Reduced: 184
+  Nearest neighbor LSH: 9480
+  Nearest neighbor True: 9480
+   distanceReduced:  69596
+   distanceLSH:  5462
+   distanceTrue: 5462
+Query: 31
+  Nearest neighbor Reduced: 8494
+  Nearest neighbor LSH: 7336
+  Nearest neighbor True: 9184
+   distanceReduced:  122602
+   distanceLSH:  14848
+   distanceTrue: 12798
+Query: 32
+  Nearest neighbor Reduced: 4696
+  Nearest neighbor LSH: 1544
+  Nearest neighbor True: 1544
+   distanceReduced:  52394
+   distanceLSH:  4879
+   distanceTrue: 4879
+Query: 33
+  Nearest neighbor Reduced: 298
+  Nearest neighbor LSH: 8494
+  Nearest neighbor True: 1336
+   distanceReduced:  119147
+   distanceLSH:  14058
+   distanceTrue: 12841
+Query: 34
+  Nearest neighbor Reduced: 8695
+  Nearest neighbor LSH: 241
+  Nearest neighbor True: 8207
+   distanceReduced:  164041
+   distanceLSH:  20003
+   distanceTrue: 18567
+Query: 35
+  Nearest neighbor Reduced: 4000
+  Nearest neighbor LSH: 4000
+  Nearest neighbor True: 4000
+   distanceReduced:  113096
+   distanceLSH:  10991
+   distanceTrue: 10991
+Query: 36
+  Nearest neighbor Reduced: 6465
+  Nearest neighbor LSH: 6605
+  Nearest neighbor True: 6465
+   distanceReduced:  154530
+   distanceLSH:  18582
+   distanceTrue: 16946
+Query: 37
+  Nearest neighbor Reduced: 5786
+  Nearest neighbor LSH: 5178
+  Nearest neighbor True: 6752
+   distanceReduced:  134481
+   distanceLSH:  13421
+   distanceTrue: 12112
+Query: 38
+  Nearest neighbor Reduced: 6586
+  Nearest neighbor LSH: 4790
+  Nearest neighbor True: 4790
+   distanceReduced:  54738
+   distanceLSH:  5238
+   distanceTrue: 5238
+Query: 39
+  Nearest neighbor Reduced: 7628
+  Nearest neighbor LSH: 2134
+  Nearest neighbor True: 6793
+   distanceReduced:  139147
+   distanceLSH:  15507
+   distanceTrue: 15111
+Query: 40
+  Nearest neighbor Reduced: 2015
+  Nearest neighbor LSH: 4470
+  Nearest neighbor True: 4766
+   distanceReduced:  76653
+   distanceLSH:  6957
+   distanceTrue: 6711
+Query: 41
+  Nearest neighbor Reduced: 3230
+  Nearest neighbor LSH: 366
+  Nearest neighbor True: 366
+   distanceReduced:  73668
+   distanceLSH:  4653
+   distanceTrue: 4653
+Query: 42
+  Nearest neighbor Reduced: 2666
+  Nearest neighbor LSH: 2666
+  Nearest neighbor True: 2666
+   distanceReduced:  117099
+   distanceLSH:  10026
+   distanceTrue: 10026
+Query: 43
+  Nearest neighbor Reduced: 7529
+  Nearest neighbor LSH: 7734
+  Nearest neighbor True: 7734
+   distanceReduced:  105832
+   distanceLSH:  9942
+   distanceTrue: 9942
+Query: 44
+  Nearest neighbor Reduced: 6846
+  Nearest neighbor LSH: 3763
+  Nearest neighbor True: 2938
+   distanceReduced:  134224
+   distanceLSH:  15899
+   distanceTrue: 13492
+Query: 45
+  Nearest neighbor Reduced: 6500
+  Nearest neighbor LSH: 8786
+  Nearest neighbor True: 8786
+   distanceReduced:  125678
+   distanceLSH:  11505
+   distanceTrue: 11505
+Query: 46
+  Nearest neighbor Reduced: 2186
+  Nearest neighbor LSH: 8642
+  Nearest neighbor True: 4969
+   distanceReduced:  117676
+   distanceLSH:  16204
+   distanceTrue: 14070
+Query: 47
+  Nearest neighbor Reduced: 7720
+  Nearest neighbor LSH: 9487
+  Nearest neighbor True: 9487
+   distanceReduced:  81215
+   distanceLSH:  8570
+   distanceTrue: 8570
+Query: 48
+  Nearest neighbor Reduced: 8834
+  Nearest neighbor LSH: 7428
+  Nearest neighbor True: 6974
+   distanceReduced:  106936
+   distanceLSH:  13989
+   distanceTrue: 12738
+Query: 49
+  Nearest neighbor Reduced: 7526
+  Nearest neighbor LSH: 9282
+  Nearest neighbor True: 9282
+   distanceReduced:  120095
+   distanceLSH:  13706
+   distanceTrue: 13706
+Query: 50
+  Nearest neighbor Reduced: 4877
+  Nearest neighbor LSH: 6656
+  Nearest neighbor True: 4616
+   distanceReduced:  125649
+   distanceLSH:  13688
+   distanceTrue: 13489
+Query: 51
+  Nearest neighbor Reduced: 6548
+  Nearest neighbor LSH: 6548
+  Nearest neighbor True: 6548
+   distanceReduced:  91550
+   distanceLSH:  10598
+   distanceTrue: 10598
+Query: 52
+  Nearest neighbor Reduced: 8635
+  Nearest neighbor LSH: 8635
+  Nearest neighbor True: 4471
+   distanceReduced:  153851
+   distanceLSH:  19655
+   distanceTrue: 19552
+Query: 53
+  Nearest neighbor Reduced: 3137
+  Nearest neighbor LSH: 6888
+  Nearest neighbor True: 2165
+   distanceReduced:  117135
+   distanceLSH:  17555
+   distanceTrue: 15842
+Query: 54
+  Nearest neighbor Reduced: 316
+  Nearest neighbor LSH: 5712
+  Nearest neighbor True: 316
+   distanceReduced:  112897
+   distanceLSH:  17318
+   distanceTrue: 14051
+Query: 55
+  Nearest neighbor Reduced: 7564
+  Nearest neighbor LSH: 7615
+  Nearest neighbor True: 2324
+   distanceReduced:  126107
+   distanceLSH:  26652
+   distanceTrue: 19842
+Query: 56
+  Nearest neighbor Reduced: 952
+  Nearest neighbor LSH: 5288
+  Nearest neighbor True: 5288
+   distanceReduced:  121955
+   distanceLSH:  14723
+   distanceTrue: 14723
+Query: 57
+  Nearest neighbor Reduced: 1546
+  Nearest neighbor LSH: 9704
+  Nearest neighbor True: 3611
+   distanceReduced:  124492
+   distanceLSH:  15158
+   distanceTrue: 14624
+Query: 58
+  Nearest neighbor Reduced: 604
+  Nearest neighbor LSH: 1697
+  Nearest neighbor True: 1697
+   distanceReduced:  64296
+   distanceLSH:  5047
+   distanceTrue: 5047
+Query: 59
+  Nearest neighbor Reduced: 1757
+  Nearest neighbor LSH: 116
+  Nearest neighbor True: 116
+   distanceReduced:  114848
+   distanceLSH:  13361
+   distanceTrue: 13361
+Query: 60
+  Nearest neighbor Reduced: 6026
+  Nearest neighbor LSH: 3535
+  Nearest neighbor True: 6026
+   distanceReduced:  97846
+   distanceLSH:  10816
+   distanceTrue: 9951
+Query: 61
+  Nearest neighbor Reduced: 4354
+  Nearest neighbor LSH: 4478
+  Nearest neighbor True: 4478
+   distanceReduced:  122000
+   distanceLSH:  16514
+   distanceTrue: 16514
+Query: 62
+  Nearest neighbor Reduced: 8067
+  Nearest neighbor LSH: 913
+  Nearest neighbor True: 5743
+   distanceReduced:  159453
+   distanceLSH:  20625
+   distanceTrue: 18795
+Query: 63
+  Nearest neighbor Reduced: 4826
+  Nearest neighbor LSH: 5544
+  Nearest neighbor True: 5544
+   distanceReduced:  109713
+   distanceLSH:  10405
+   distanceTrue: 10405
+Query: 64
+  Nearest neighbor Reduced: 5396
+  Nearest neighbor LSH: 5396
+  Nearest neighbor True: 5396
+   distanceReduced:  137886
+   distanceLSH:  15000
+   distanceTrue: 15000
+Query: 65
+  Nearest neighbor Reduced: 4116
+  Nearest neighbor LSH: 3311
+  Nearest neighbor True: 3887
+   distanceReduced:  155200
+   distanceLSH:  19983
+   distanceTrue: 17371
+Query: 66
+  Nearest neighbor Reduced: 2050
+  Nearest neighbor LSH: 2050
+  Nearest neighbor True: 2050
+   distanceReduced:  91655
+   distanceLSH:  9630
+   distanceTrue: 9630
+Query: 67
+  Nearest neighbor Reduced: 1782
+  Nearest neighbor LSH: 4900
+  Nearest neighbor True: 1782
+   distanceReduced:  106848
+   distanceLSH:  18905
+   distanceTrue: 16391
+Query: 68
+  Nearest neighbor Reduced: 4593
+  Nearest neighbor LSH: 6656
+  Nearest neighbor True: 6656
+   distanceReduced:  136877
+   distanceLSH:  16366
+   distanceTrue: 16366
+Query: 69
+  Nearest neighbor Reduced: 5588
+  Nearest neighbor LSH: 5493
+  Nearest neighbor True: 5493
+   distanceReduced:  104829
+   distanceLSH:  15840
+   distanceTrue: 15840
+Query: 70
+  Nearest neighbor Reduced: 2952
+  Nearest neighbor LSH: 68
+  Nearest neighbor True: 2952
+   distanceReduced:  122083
+   distanceLSH:  27000
+   distanceTrue: 16172
+Query: 71
+  Nearest neighbor Reduced: 6902
+  Nearest neighbor LSH: 6902
+  Nearest neighbor True: 6902
+   distanceReduced:  112470
+   distanceLSH:  12544
+   distanceTrue: 12544
+Query: 72
+  Nearest neighbor Reduced: 2500
+  Nearest neighbor LSH: 4082
+  Nearest neighbor True: 4082
+   distanceReduced:  116463
+   distanceLSH:  12838
+   distanceTrue: 12838
+Query: 73
+  Nearest neighbor Reduced: 2464
+  Nearest neighbor LSH: 8474
+  Nearest neighbor True: 6425
+   distanceReduced:  156771
+   distanceLSH:  20412
+   distanceTrue: 17634
+Query: 74
+  Nearest neighbor Reduced: 8849
+  Nearest neighbor LSH: 8849
+  Nearest neighbor True: 3146
+   distanceReduced:  112310
+   distanceLSH:  12069
+   distanceTrue: 11949
+Query: 75
+  Nearest neighbor Reduced: 4960
+  Nearest neighbor LSH: 4960
+  Nearest neighbor True: 4960
+   distanceReduced:  66663
+   distanceLSH:  5450
+   distanceTrue: 5450
+Query: 76
+  Nearest neighbor Reduced: 4946
+  Nearest neighbor LSH: 7866
+  Nearest neighbor True: 1746
+   distanceReduced:  112148
+   distanceLSH:  15600
+   distanceTrue: 13437
+Query: 77
+  Nearest neighbor Reduced: 6340
+  Nearest neighbor LSH: 8014
+  Nearest neighbor True: 8014
+   distanceReduced:  98788
+   distanceLSH:  12553
+   distanceTrue: 12553
+Query: 78
+  Nearest neighbor Reduced: 1390
+  Nearest neighbor LSH: 6014
+  Nearest neighbor True: 1022
+   distanceReduced:  145182
+   distanceLSH:  16672
+   distanceTrue: 15312
+Query: 79
+  Nearest neighbor Reduced: 8271
+  Nearest neighbor LSH: 1681
+  Nearest neighbor True: 1681
+   distanceReduced:  115394
+   distanceLSH:  11159
+   distanceTrue: 11159
+Query: 80
+  Nearest neighbor Reduced: 5427
+  Nearest neighbor LSH: 1217
+  Nearest neighbor True: 1217
+   distanceReduced:  123947
+   distanceLSH:  12502
+   distanceTrue: 12502
+Query: 81
+  Nearest neighbor Reduced: 9655
+  Nearest neighbor LSH: 9519
+  Nearest neighbor True: 9519
+   distanceReduced:  96865
+   distanceLSH:  11169
+   distanceTrue: 11169
+Query: 82
+  Nearest neighbor Reduced: 816
+  Nearest neighbor LSH: 5003
+  Nearest neighbor True: 9808
+   distanceReduced:  118297
+   distanceLSH:  13583
+   distanceTrue: 13299
+Query: 83
+  Nearest neighbor Reduced: 4398
+  Nearest neighbor LSH: 9668
+  Nearest neighbor True: 8997
+   distanceReduced:  133314
+   distanceLSH:  15972
+   distanceTrue: 15724
+Query: 84
+  Nearest neighbor Reduced: 1216
+  Nearest neighbor LSH: 7565
+  Nearest neighbor True: 8990
+   distanceReduced:  103587
+   distanceLSH:  11754
+   distanceTrue: 11713
+Query: 85
+  Nearest neighbor Reduced: 532
+  Nearest neighbor LSH: 726
+  Nearest neighbor True: 6677
+   distanceReduced:  148299
+   distanceLSH:  19691
+   distanceTrue: 18642
+Query: 86
+  Nearest neighbor Reduced: 2256
+  Nearest neighbor LSH: 3625
+  Nearest neighbor True: 3110
+   distanceReduced:  130268
+   distanceLSH:  16437
+   distanceTrue: 12718
+Query: 87
+  Nearest neighbor Reduced: 1381
+  Nearest neighbor LSH: 3223
+  Nearest neighbor True: 3008
+   distanceReduced:  99426
+   distanceLSH:  9805
+   distanceTrue: 9263
+Query: 88
+  Nearest neighbor Reduced: 8882
+  Nearest neighbor LSH: 6782
+  Nearest neighbor True: 7162
+   distanceReduced:  156295
+   distanceLSH:  17992
+   distanceTrue: 16624
+Query: 89
+  Nearest neighbor Reduced: 3706
+  Nearest neighbor LSH: 5222
+  Nearest neighbor True: 5222
+   distanceReduced:  90603
+   distanceLSH:  14400
+   distanceTrue: 14400
+Query: 90
+  Nearest neighbor Reduced: 1977
+  Nearest neighbor LSH: 8815
+  Nearest neighbor True: 1977
+   distanceReduced:  83280
+   distanceLSH:  7067
+   distanceTrue: 6929
+Query: 91
+  Nearest neighbor Reduced: 4281
+  Nearest neighbor LSH: 7501
+  Nearest neighbor True: 7625
+   distanceReduced:  116143
+   distanceLSH:  16431
+   distanceTrue: 15987
+Query: 92
+  Nearest neighbor Reduced: 8850
+  Nearest neighbor LSH: 4018
+  Nearest neighbor True: 4018
+   distanceReduced:  93732
+   distanceLSH:  12680
+   distanceTrue: 12680
+Query: 93
+  Nearest neighbor Reduced: 7335
+  Nearest neighbor LSH: 1037
+  Nearest neighbor True: 1507
+   distanceReduced:  113845
+   distanceLSH:  13611
+   distanceTrue: 12324
+Query: 94
+  Nearest neighbor Reduced: 6098
+  Nearest neighbor LSH: 10
+  Nearest neighbor True: 10
+   distanceReduced:  123509
+   distanceLSH:  11384
+   distanceTrue: 11384
+Query: 95
+  Nearest neighbor Reduced: 9487
+  Nearest neighbor LSH: 6116
+  Nearest neighbor True: 6116
+   distanceReduced:  102628
+   distanceLSH:  5897
+   distanceTrue: 5897
+Query: 96
+  Nearest neighbor Reduced: 6383
+  Nearest neighbor LSH: 4593
+  Nearest neighbor True: 8477
+   distanceReduced:  154428
+   distanceLSH:  22152
+   distanceTrue: 18943
+Query: 97
+  Nearest neighbor Reduced: 2918
+  Nearest neighbor LSH: 5234
+  Nearest neighbor True: 5234
+   distanceReduced:  87023
+   distanceLSH:  7503
+   distanceTrue: 7503
+Query: 98
+  Nearest neighbor Reduced: 1586
+  Nearest neighbor LSH: 4258
+  Nearest neighbor True: 5626
+   distanceReduced:  114555
+   distanceLSH:  20598
+   distanceTrue: 13746
+Query: 99
+  Nearest neighbor Reduced: 1898
+  Nearest neighbor LSH: 2242
+  Nearest neighbor True: 1898
+   distanceReduced:  117409
+   distanceLSH:  15751
+   distanceTrue: 15498
+Query: 100
+  Nearest neighbor Reduced: 3302
+  Nearest neighbor LSH: 9968
+  Nearest neighbor True: 9968
+   distanceReduced:  116056
+   distanceLSH:  13348
+   distanceTrue: 13348
 
-tReduced: 5.828
-tLSH: 110.914
-tTrue: 291.832
-Approximation Factor LSH: 1.02694
-Approximation Factor Reduced: 1.7631
+tReduced: 941.979
+tLSH: 160.051
+tTrue: 2835.1
+Approximation Factor LSH: 1.07545
+Approximation Factor Reduced: 1.19265
 
