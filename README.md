@@ -1,5 +1,3 @@
-# Latent vs Original Space Image Classification
-  
 <p style="text-align: center;">
     <img src="./docs/di_uoa.png" alt="UOA">
     <h1>University of Athens</h1>
@@ -10,6 +8,7 @@
 <h3>Andreas Giannoutsos - 1115201700021</h3>
 <br>
 
+# Latent vs Original Space Image Classification
 
 <h3>Introduction to our project (info, goals, complexity, speed, results, simplicity, abstractiveness)</h3>
 <h4>
