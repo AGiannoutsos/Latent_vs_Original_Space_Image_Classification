@@ -321,7 +321,7 @@ def main():
                 print(bcolors.FAIL+'Error: invalid path 6.'+bcolors.ENDC)
         print(bcolors.OKCYAN+'Images classification.'+bcolors.ENDC)
         model = load_model(model_info)
-        prediction_hot = model.predict(train_X[:10000,:,:,:])
+        prediction_hot = model.predict(train_X[:,:,:,:])
         predictions = np.argmax(prediction_hot, axis=1)
 
         # get the clustres
