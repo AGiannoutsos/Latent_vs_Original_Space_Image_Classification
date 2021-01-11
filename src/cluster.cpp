@@ -237,7 +237,7 @@ int main(int argc, char** argv) {
     original_space.fit_transform(original_inputData, LLOYDS_CLUSTERING);
     
     // extract results
-    output << "NEW SPACE" <<endl;
+    output << "ORIGINAL SPACE" <<endl;
     centroids = original_space.getCentroids();
     clusters_ = original_space.getResults();
     silhouette = original_space.getSilhouettes();
@@ -269,7 +269,7 @@ int main(int argc, char** argv) {
 
     // extract results
     silhouette = original_space.getSilhouettes();
-    output << "NEW SPACE" <<endl;
+    output << "CLASSES AS CLUSTERS" <<endl;
     output << "Silhouette: [ ";
     cout << endl;
     for (int i=0; i < centroids->getRows(); i++) {

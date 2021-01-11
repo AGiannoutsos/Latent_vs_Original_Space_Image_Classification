@@ -326,7 +326,7 @@ if __name__ == '__main__':
     # print(datasetFile,dlabelsFile,testsetFile,tlabelsFile, outputFile)
 
     t = 100
-    q = 1
+    q = 5
 
     train_X = load_mnist(datasetFile, type='data')[0:t]
     train_Y = load_mnist(dlabelsFile, type='labels')[0:t]
