@@ -1,7 +1,7 @@
 # Latent vs Original Space Image Classification
   
 <p style="text-align: center;">
-    <img src="./doc/di_uoa.png" alt="UOA">
+    <img src="./docs/di_uoa.png" alt="UOA">
     <h1>University of Athens</h1>
     <h2>Department of Informatics and Telecomunications</h2>
 </p>
