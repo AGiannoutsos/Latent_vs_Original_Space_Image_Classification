@@ -78,7 +78,7 @@ Execute: python reduce.py –d <dataset> -q <queryset> -od <output_dataset_file>
 απόσταση Manhattan προσεγγιστικού (NeuralNet ή LSH) / πραγματικού πλησιέστερου γείτονα από το
 διάνυσμα επερώτησης στον αρχικό χώρο."</h4>
 <h4>
-Execute the first task and use the outputs as the <new space files>
+Execute the first task and use the outputs as the "new space files"
 Execute: ./bin/search –d <input file original space> -i <input file new space> –q <query file
 original space> -s <query file new space> –k <int> -L <int> -ο <output file></h4>
 <h3>Task C</h3>
