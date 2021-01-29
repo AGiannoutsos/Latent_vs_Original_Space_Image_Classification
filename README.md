@@ -81,7 +81,7 @@ Execute: python reduce.py –d 'dataset' -q 'queryset' -od 'output_dataset_file'
 About the experiments:
 
 We tested different models in Google Colab
-[![Click here to open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/AGiannoutsos/Latent_vs_Original_Space_Image_Classification/blob/main/experiments/autoencoder_experiments.ipynb)
+[![Click here to open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AGiannoutsos/Latent_vs_Original_Space_Image_Classification/blob/main/experiments/autoencoder_experiments.ipynb)
 
 We found the best architecture of the model that minimizes the loss without overfitting. Also we compiled different autoencoder models 
 that reduce to different domensions the image in 20, 50, 100 and 200</h4>
