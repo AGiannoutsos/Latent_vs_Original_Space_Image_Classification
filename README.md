@@ -102,7 +102,7 @@ original space' -s 'query file new space' –k 'int' -L 'int' -ο 'output file'<
 
 About the experiments:
 
-We tested different latent space dimensions and the resutls can be found here  [![Click here to open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/AGiannoutsos/Latent_vs_Original_Space_Image_Classification/blob/main/experiments/reduced_ann_experiments.ipynb)
+We tested different latent space dimensions and the resutls can be found here  [![Click here to open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AGiannoutsos/Latent_vs_Original_Space_Image_Classification/blob/main/experiments/reduced_ann_experiments.ipynb)
 
 The LSH from the experiments seems to have very good results when the number of w is 20000. The calculation time remains short and the accuracy is quite high.
 <p style="text-align: center;">
@@ -130,7 +130,7 @@ Execute: ./emd/search_emd.py -d 'input file original space' –q 'query file ori
 
 About the experimets:
 
-The results can be found here [![Click here to open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/AGiannoutsos/Latent_vs_Original_Space_Image_Classification/blob/main/experiments/emd_experiments.ipynb) for different compinations of cluster windows.
+The results can be found here [![Click here to open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AGiannoutsos/Latent_vs_Original_Space_Image_Classification/blob/main/experiments/emd_experiments.ipynb) for different compinations of cluster windows.
 
 MNIST proved to be very good for manhattan distance. As the images have the same orientation and the labels do not differ much between them it is very easy for this metric to draw conclusions about the images.
 
@@ -150,7 +150,7 @@ Execute: ./bin/cluster –d 'input file original space' -i 'input file new space
 
 About the experiments:
 
-We plotted the results from the clustering here [![Click here to open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/AGiannoutsos/Latent_vs_Original_Space_Image_Classification/blob/main/experiments/clutering_experiments.ipynb)
+We plotted the results from the clustering here [![Click here to open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AGiannoutsos/Latent_vs_Original_Space_Image_Classification/blob/main/experiments/clutering_experiments.ipynb)
 
 <p style="text-align: center;">
     <img src="./docs/clustering_time.png" alt="UOA">
