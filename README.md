@@ -4,8 +4,8 @@
     <h2>Department of Informatics and Telecomunications</h2>
 </p>
 
-<h3>Dionysis Taxiarchis Balaskas - 1115201700094</h3>
-<h3>Andreas Giannoutsos - 1115201700021</h3>
+<h3>[Dionysis Taxiarchis Balaskas](https://github.com/dbalaskas) - 1115201700094</h3>
+<h3>[Andreas Giannoutsos](https://github.com/AGiannoutsos) - 1115201700021</h3>
 <br>
 
 # Latent vs Original Space Image Classification
